@@ -1,9 +1,12 @@
 <div class="lang-switcher">
+  {{ $currentPath := .RelPermalink }}
   {{ if eq site.Language.Lang "en" }}
     <span class="lang-active">English</span>
-    <a href="/es/" class="lang-link">Español</a>
+    <a href="{{ printf "/es%s" $currentPath }}" class="lang-link">Español</a>
   {{ else }}
-    <a href="/" class="lang-link">English</a>
+    {{ $enPath := strings.TrimPrefix "/es" $currentPath }}
+    {{ if eq $enPath "" }}{{ $enPath = "/" }}{{ end }}
+    <a href="{{ $enPath }}" class="lang-link">English</a>
     <span class="lang-active">Español</span>
   {{ end }}
 </div>

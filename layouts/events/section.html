@@ -6,7 +6,9 @@
 {{ $today := now.Format "2006-01-02" }}
 {{ $events := slice }}
 {{ range $key, $event := hugo.Data.events }}
-  {{ if and $event.active (ge $event.date $today) }}
+  {{ $cutoff := $event.date }}
+  {{ if and $event.end_date (ne $event.end_date "") }}{{ $cutoff = $event.end_date }}{{ end }}
+  {{ if and $event.active (ge $cutoff $today) }}
     {{ $events = $events | append $event }}
   {{ end }}
 {{ end }}
