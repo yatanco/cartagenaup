@@ -1,0 +1,25 @@
+{{ define "main" }}
+<h1>Cartagena, actually current.</h1>
+<p class="subhead">WiFi-tested work spots, current events, and honest beach logistics — by someone who lives here.</p>
+<p class="last-updated">Last updated: {{ .Site.Params.lastUpdated }}</p>
+
+<div class="section-teasers">
+  <div class="teaser">
+    <h2>Work in Cartagena</h2>
+    <p>WiFi-tested cafés and coworking spaces, verified by a local.</p>
+    <a href="/work/">See all spots →</a>
+  </div>
+  <div class="teaser">
+    <h2>This Week</h2>
+    <p>Current events, nightlife, and live music — updated every Monday.</p>
+    <a href="/events/">See what's on →</a>
+  </div>
+  <div class="teaser">
+    <h2>Beaches & Islands</h2>
+    <p>Honest beach logistics for Barú, Playa Blanca, and the Rosario Islands.</p>
+    <a href="/beaches/">See all beaches →</a>
+  </div>
+</div>
+
+{{ partial "whatsapp-cta.html" . }}
+{{ end }}

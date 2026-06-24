@@ -1,0 +1,19 @@
+{{ define "main" }}
+<h1>{{ .Title }}</h1>
+{{ with .Content }}<div>{{ . }}</div>{{ end }}
+
+{{ $spots := slice }}
+{{ range $key, $place := hugo.Data.places.work }}
+  {{ if $place.active }}
+    {{ $spots = $spots | append $place }}
+  {{ end }}
+{{ end }}
+
+{{ $sorted := sort $spots "last_tested" "desc" }}
+
+{{ range $sorted }}
+  {{ partial "place-card.html" . }}
+{{ end }}
+
+{{ partial "whatsapp-cta.html" . }}
+{{ end }}

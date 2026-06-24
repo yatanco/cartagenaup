@@ -1,0 +1,26 @@
+{{ define "main" }}
+<h1>{{ .Title }}</h1>
+{{ with .Content }}<div>{{ . }}</div>{{ end }}
+
+{{ range $key, $beach := hugo.Data.places.beaches }}
+  {{ if $beach.active }}
+  <div class="beach-card">
+    <h3>{{ $beach.name }}</h3>
+    <div class="card-meta">{{ $beach.island | title }}</div>
+    <span class="badge">Last visited: {{ $beach.last_visited }}</span>
+    <div class="pills">
+      <span class="pill">Crowd: {{ $beach.crowd_level }}</span>
+      {{ range $beach.best_for }}<span class="pill">{{ . }}</span>{{ end }}
+    </div>
+    {{ with $beach.how_to_get_there }}<p class="card-note"><strong>Getting there:</strong> {{ . }}</p>{{ end }}
+    {{ with $beach.cost_range }}<p class="card-meta">Cost: {{ . }}</p>{{ end }}
+    {{ with $beach.current_conditions }}<p class="card-note"><strong>Current conditions:</strong> {{ . }}</p>{{ end }}
+    {{ with $beach.overnight_note }}<p class="card-note">{{ . }}</p>{{ end }}
+    {{ with $beach.casa_gaviota_note }}<p class="card-note">{{ . }}</p>{{ end }}
+    {{ with $beach.maps_link }}<div class="card-links"><a href="{{ . }}" target="_blank" rel="noopener">Open in Maps</a></div>{{ end }}
+  </div>
+  {{ end }}
+{{ end }}
+
+{{ partial "whatsapp-cta.html" . }}
+{{ end }}

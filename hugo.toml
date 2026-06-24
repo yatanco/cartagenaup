@@ -1,0 +1,61 @@
+baseURL = 'https://cartagenaup.com/'
+title = 'Cartagena Up'
+defaultContentLanguage = 'en'
+
+[params]
+  description = "Cartagena, actually current. WiFi-tested work spots, current events, and honest beach logistics."
+  whatsapp = "+57300000000"
+  lastUpdated = "2026-06"
+
+[languages]
+  [languages.en]
+    languageName = "English"
+    weight = 1
+    contentDir = "content/en"
+
+  [languages.es]
+    languageName = "Español"
+    weight = 2
+    contentDir = "content/es"
+    [languages.es.params]
+      description = "Cartagena, realmente actualizada. Lugares de trabajo con WiFi probado, eventos actuales y logística honesta de playas."
+
+[[languages.en.menus.main]]
+  name = "Work in Cartagena"
+  url = "/work/"
+  weight = 1
+
+[[languages.en.menus.main]]
+  name = "This Week"
+  url = "/events/"
+  weight = 2
+
+[[languages.en.menus.main]]
+  name = "Beaches & Islands"
+  url = "/beaches/"
+  weight = 3
+
+[[languages.en.menus.main]]
+  name = "About"
+  url = "/about/"
+  weight = 4
+
+[[languages.es.menus.main]]
+  name = "Trabajar en Cartagena"
+  url = "/es/work/"
+  weight = 1
+
+[[languages.es.menus.main]]
+  name = "Esta Semana"
+  url = "/es/events/"
+  weight = 2
+
+[[languages.es.menus.main]]
+  name = "Playas e Islas"
+  url = "/es/beaches/"
+  weight = 3
+
+[[languages.es.menus.main]]
+  name = "Acerca de"
+  url = "/es/about/"
+  weight = 4

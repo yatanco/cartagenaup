@@ -1,0 +1,31 @@
+{{ define "main" }}
+<h1>{{ .Title }}</h1>
+{{ with .Content }}<div>{{ . }}</div>{{ end }}
+
+{{ $today := now.Format "2006-01-02" }}
+{{ $events := slice }}
+{{ range $key, $event := hugo.Data.events }}
+  {{ if and $event.active (ge $event.date $today) }}
+    {{ $events = $events | append $event }}
+  {{ end }}
+{{ end }}
+
+{{ $sorted := sort $events "date" "asc" }}
+
+{{ range $sorted }}
+<div class="event-card">
+  <h3>{{ .title }}</h3>
+  <div class="card-meta">{{ .date }}{{ with .venue }} · {{ . }}{{ end }}{{ with .neighborhood }}, {{ . }}{{ end }}</div>
+  {{ if .confirmed }}<span class="badge badge-confirmed">Confirmed</span>{{ end }}
+  {{ with .price }}<p class="card-meta">{{ . }}</p>{{ end }}
+  {{ with .notes }}<p class="card-note">{{ . }}</p>{{ end }}
+  {{ with .maps_link }}<div class="card-links"><a href="{{ . }}" target="_blank" rel="noopener">Open in Maps</a></div>{{ end }}
+</div>
+{{ end }}
+
+{{ if not $sorted }}
+<p>No upcoming events right now — check back Monday.</p>
+{{ end }}
+
+{{ partial "whatsapp-cta.html" . }}
+{{ end }}

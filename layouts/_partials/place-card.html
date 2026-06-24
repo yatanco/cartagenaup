@@ -1,0 +1,33 @@
+{{ $place := . }}
+{{ $site := $.Site }}
+<div class="place-card{{ if $place.hotspot_warning }} place-card--hotspot-warning{{ end }}">
+  {{ with index $place.images 0 }}
+  <figure class="card-photo">
+    <img src="/images/places/work/{{ .file }}" alt="{{ .caption }}" loading="lazy" width="640" height="400">
+    <figcaption>{{ .caption }}</figcaption>
+  </figure>
+  {{ end }}
+  <h3>{{ $place.name }}</h3>
+  <div class="card-meta">{{ $place.neighborhood }}</div>
+  <span class="badge">Last tested: {{ $place.last_tested }}</span>
+  <div class="pills">
+    <span class="pill">WiFi {{ $place.wifi_down_mbps }}/{{ $place.wifi_up_mbps }} Mbps</span>
+    {{ if $place.ac }}<span class="pill">AC</span>{{ end }}
+    <span class="pill">Outlets: {{ $place.outlets }}</span>
+    <span class="pill">Noise: {{ $place.noise_level }}</span>
+    <span class="pill">Video calls: {{ $place.video_calls }}</span>
+    {{ if $place.hotspot_warning }}<span class="pill pill-warning">⚠ Bring a hotspot backup</span>{{ end }}
+  </div>
+  {{ with $place.wifi_network }}<p class="card-wifi-network">Network: {{ . }}</p>{{ end }}
+  {{ with $place.local_note }}<p class="card-note">{{ . }}</p>{{ end }}
+  {{ with $place.best_spot }}<p class="card-best-spot"><em>📍 Best spot: {{ . }}</em></p>{{ end }}
+  {{ with $place.hours }}<p class="card-meta">Hours: {{ . }}</p>{{ end }}
+  {{ with $place.related_listing }}
+    {{ $related := index hugo.Data.places.work . }}
+    <p class="card-related">📍 Also at this location: <a href="/work/{{ . }}/">{{ with $related }}{{ .name }}{{ else }}{{ . | humanize | title }}{{ end }}</a></p>
+  {{ end }}
+  <div class="card-links">
+    {{ with $place.maps_link }}<a href="{{ . }}" target="_blank" rel="noopener">Open in Maps</a>{{ end }}
+    <a href="https://wa.me/{{ $site.Params.whatsapp }}?text={{ $place.whatsapp_update_text | urlquery }}">Something changed?</a>
+  </div>
+</div>
