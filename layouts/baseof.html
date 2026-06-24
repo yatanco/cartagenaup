@@ -11,7 +11,10 @@
 </head>
 <body>
   <header>
-    <a class="site-title" href="/">{{ .Site.Title }}</a>
+    <div class="header-top">
+      <a class="site-title" href="{{ .Site.Home.RelPermalink }}">{{ .Site.Title }}</a>
+      {{ partial "language-switcher.html" . }}
+    </div>
     <nav>
       {{ range .Site.Menus.main }}
         <a href="{{ .URL }}">{{ .Name }}</a>
@@ -22,7 +25,11 @@
     {{ block "main" . }}{{ end }}
   </main>
   <footer>
-    Cartagena Up · By someone who lives here · Last updated: {{ .Site.Params.lastUpdated }}
+    {{ if eq .Site.Language.Lang "es" }}
+      Cartagena Up · Por alguien que vive aquí · Última actualización: {{ .Site.Params.lastUpdated }}
+    {{ else }}
+      Cartagena Up · By someone who lives here · Last updated: {{ .Site.Params.lastUpdated }}
+    {{ end }}
   </footer>
 </body>
 </html>

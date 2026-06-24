@@ -1,25 +1,46 @@
 {{ define "main" }}
-<h1>Cartagena, actually current.</h1>
-<p class="subhead">WiFi-tested work spots, current events, and honest beach logistics — by someone who lives here.</p>
-<p class="last-updated">Last updated: {{ .Site.Params.lastUpdated }}</p>
-
-<div class="section-teasers">
-  <div class="teaser">
-    <h2>Work in Cartagena</h2>
-    <p>WiFi-tested cafés and coworking spaces, verified by a local.</p>
-    <a href="/work/">See all spots →</a>
+{{ if eq .Site.Language.Lang "es" }}
+  <h1>Cartagena, realmente actualizada.</h1>
+  <p class="subhead">Lugares de trabajo con WiFi probado, eventos actuales y logística honesta de playas — por alguien que vive aquí.</p>
+  <p class="last-updated">Última actualización: {{ .Site.Params.lastUpdated }}</p>
+  <div class="section-teasers">
+    <div class="teaser">
+      <h2>Trabajar en Cartagena</h2>
+      <p>Cafés con WiFi probado y espacios de coworking, verificados por un local.</p>
+      <a href="/es/work/">Ver todos los lugares →</a>
+    </div>
+    <div class="teaser">
+      <h2>Esta Semana</h2>
+      <p>Eventos actuales, vida nocturna y música en vivo — actualizado cada lunes.</p>
+      <a href="/es/events/">Ver qué hay →</a>
+    </div>
+    <div class="teaser">
+      <h2>Playas e Islas</h2>
+      <p>Logística honesta de playas para Barú, Playa Blanca y las Islas del Rosario.</p>
+      <a href="/es/beaches/">Ver todas las playas →</a>
+    </div>
   </div>
-  <div class="teaser">
-    <h2>This Week</h2>
-    <p>Current events, nightlife, and live music — updated every Monday.</p>
-    <a href="/events/">See what's on →</a>
+{{ else }}
+  <h1>Cartagena, actually current.</h1>
+  <p class="subhead">WiFi-tested work spots, current events, and honest beach logistics — by someone who lives here.</p>
+  <p class="last-updated">Last updated: {{ .Site.Params.lastUpdated }}</p>
+  <div class="section-teasers">
+    <div class="teaser">
+      <h2>Work in Cartagena</h2>
+      <p>WiFi-tested cafés and coworking spaces, verified by a local.</p>
+      <a href="/work/">See all spots →</a>
+    </div>
+    <div class="teaser">
+      <h2>This Week</h2>
+      <p>Current events, nightlife, and live music — updated every Monday.</p>
+      <a href="/events/">See what's on →</a>
+    </div>
+    <div class="teaser">
+      <h2>Beaches & Islands</h2>
+      <p>Honest beach logistics for Barú, Playa Blanca, and the Rosario Islands.</p>
+      <a href="/beaches/">See all beaches →</a>
+    </div>
   </div>
-  <div class="teaser">
-    <h2>Beaches & Islands</h2>
-    <p>Honest beach logistics for Barú, Playa Blanca, and the Rosario Islands.</p>
-    <a href="/beaches/">See all beaches →</a>
-  </div>
-</div>
-
+{{ end }}
 {{ partial "whatsapp-cta.html" . }}
 {{ end }}

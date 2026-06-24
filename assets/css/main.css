@@ -41,6 +41,13 @@ header {
   margin-bottom: 2rem;
 }
 
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
 header .site-title {
   font-size: 1.1rem;
   font-weight: 700;
@@ -63,6 +70,27 @@ nav a {
 }
 
 nav a:hover {
+  color: var(--color-accent);
+}
+
+.lang-switcher {
+  font-size: 0.8rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.lang-active {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.lang-link {
+  color: var(--color-muted);
+  text-decoration: none;
+}
+
+.lang-link:hover {
   color: var(--color-accent);
 }
 

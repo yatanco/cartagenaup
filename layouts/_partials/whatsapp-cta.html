@@ -1,3 +1,7 @@
 <div class="whatsapp-cta">
-  Need a local tip, work spot, or beach day? <a href="https://wa.me/{{ .Site.Params.whatsapp }}" target="_blank" rel="noopener">Message us on WhatsApp.</a>
+  {{ if eq site.Language.Lang "es" }}
+    ¿Necesitas un consejo local, un lugar de trabajo o planeas ir a la playa? <a href="https://wa.me/{{ site.Params.whatsapp }}" target="_blank" rel="noopener">Escríbenos por WhatsApp.</a>
+  {{ else }}
+    Need a local tip, work spot, or beach day? <a href="https://wa.me/{{ site.Params.whatsapp }}" target="_blank" rel="noopener">Message us on WhatsApp.</a>
+  {{ end }}
 </div>
