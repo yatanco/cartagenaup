@@ -19,7 +19,11 @@
   <div class="card-meta">{{ .date }}{{ with .venue }} · {{ . }}{{ end }}{{ with .neighborhood }}, {{ . }}{{ end }}</div>
   {{ if .confirmed }}<span class="badge badge-confirmed">{{ if eq $lang "es" }}Confirmado{{ else }}Confirmed{{ end }}</span>{{ end }}
   {{ with .price }}<p class="card-meta">{{ . }}</p>{{ end }}
-  {{ with .notes }}<p class="card-note">{{ . }}</p>{{ end }}
+  {{ if eq $lang "en" }}
+    {{ if .notes_en }}<p class="card-note">{{ .notes_en }}</p>{{ else }}{{ with .notes }}<p class="card-note">{{ . }}</p>{{ end }}{{ end }}
+  {{ else }}
+    {{ with .notes }}<p class="card-note">{{ . }}</p>{{ end }}
+  {{ end }}
   {{ with .maps_link }}<div class="card-links"><a href="{{ . }}" target="_blank" rel="noopener">{{ if eq $lang "es" }}Abrir en mapas{{ else }}Open in Maps{{ end }}</a></div>{{ end }}
 </div>
 {{ end }}

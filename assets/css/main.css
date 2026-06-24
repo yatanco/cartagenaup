@@ -192,6 +192,95 @@ a {
   color: var(--color-warning);
 }
 
+.place-title-link {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.place-title-link:hover {
+  text-decoration: underline;
+}
+
+.address {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.maps-link {
+  display: inline-block;
+  font-size: 0.85rem;
+  color: var(--color-accent);
+  text-decoration: none;
+  margin-top: 0.5rem;
+}
+
+.maps-link:hover {
+  text-decoration: underline;
+}
+
+.place-detail {
+  padding-bottom: 1rem;
+}
+
+.place-detail h1 {
+  margin-bottom: 0.25rem;
+}
+
+.place-detail-meta {
+  margin: 1rem 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.place-detail-meta dt {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-muted);
+}
+
+.place-detail-meta dd {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.card-note--warning {
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.detail-photo img {
+  height: 320px;
+}
+
+.detail-extra-photo {
+  margin-top: 1rem;
+}
+
+.detail-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 1rem 0;
+  font-size: 0.875rem;
+}
+
+.whatsapp-link {
+  color: var(--color-muted);
+  text-decoration: none;
+}
+
+.whatsapp-link:hover {
+  color: var(--color-accent);
+}
+
 .card-wifi-network {
   font-size: 0.775rem;
   color: var(--color-muted);

@@ -9,8 +9,9 @@
     <figcaption>{{ .caption }}</figcaption>
   </figure>
   {{ end }}
-  <h3>{{ $place.name }}</h3>
+  <h3><a class="place-title-link" href="{{ $workBase }}{{ $place.slug }}/">{{ $place.name }}</a></h3>
   <div class="card-meta">{{ $place.neighborhood }}</div>
+  {{ with $place.address }}<span class="address">{{ . }}</span>{{ end }}
   {{ if eq $lang "es" }}
     <span class="badge">Verificado: {{ $place.last_tested }}</span>
   {{ else }}
@@ -47,7 +48,7 @@
   {{ end }}
   <div class="card-links">
     {{ with $place.maps_link }}
-      <a href="{{ . }}" target="_blank" rel="noopener">{{ if eq $lang "es" }}Abrir en mapas{{ else }}Open in Maps{{ end }}</a>
+      <a href="{{ . }}" target="_blank" rel="noopener" class="maps-link">📍 {{ if eq $lang "es" }}Ver en Google Maps{{ else }}Open in Google Maps{{ end }}</a>
     {{ end }}
     <a href="https://wa.me/{{ site.Params.whatsapp }}?text={{ $place.whatsapp_update_text | urlquery }}">{{ if eq $lang "es" }}¿Algo cambió?{{ else }}Something changed?{{ end }}</a>
   </div>

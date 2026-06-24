@@ -9,12 +9,12 @@ defaultContentLanguage = 'en'
 
 [languages]
   [languages.en]
-    languageName = "English"
+    label = "English"
     weight = 1
     contentDir = "content/en"
 
   [languages.es]
-    languageName = "Español"
+    label = "Español"
     weight = 2
     contentDir = "content/es"
     [languages.es.params]

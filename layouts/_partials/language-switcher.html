@@ -1,15 +1,9 @@
 <div class="lang-switcher">
-  {{ range .Site.Languages }}
-    {{ if eq .Lang $.Site.Language.Lang }}
-      <span class="lang-active">{{ .LanguageName }}</span>
-    {{ else }}
-      {{ $url := "/" }}
-      {{ if eq .Lang "es" }}
-        {{ $url = "/es/" }}
-      {{ else }}
-        {{ $url = "/" }}
-      {{ end }}
-      <a href="{{ $url }}" class="lang-link">{{ .LanguageName }}</a>
-    {{ end }}
+  {{ if eq site.Language.Lang "en" }}
+    <span class="lang-active">English</span>
+    <a href="/es/" class="lang-link">Español</a>
+  {{ else }}
+    <a href="/" class="lang-link">English</a>
+    <span class="lang-active">Español</span>
   {{ end }}
 </div>
