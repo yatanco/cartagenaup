@@ -27,9 +27,9 @@
   </div>
   <div style="display:flex; gap:8px; flex-wrap:wrap;" id="filter-pills">
     <span class="filter-pill active" onclick="setFilter('all',this)">{{ if eq $lang "es" }}Todos{{ else }}All{{ end }}</span>
-    <span class="filter-pill" onclick="setFilter('cultural',this)">Cultura</span>
-    <span class="filter-pill" onclick="setFilter('music',this)">Música</span>
-    <span class="filter-pill" onclick="setFilter('gratis',this)">Gratis</span>
+    <span class="filter-pill" onclick="setFilter('cultural',this)">{{ if eq $lang "es" }}Cultura{{ else }}Culture{{ end }}</span>
+    <span class="filter-pill" onclick="setFilter('music',this)">{{ if eq $lang "es" }}Música{{ else }}Music{{ end }}</span>
+    <span class="filter-pill" onclick="setFilter('gratis',this)">{{ if eq $lang "es" }}Gratis{{ else }}Free{{ end }}</span>
   </div>
 </div>
 <div id="event-count" style="font-size:12px; color:var(--color-muted); margin-bottom:1rem;"></div>
@@ -77,7 +77,7 @@
         <div class="tags" style="margin-top:6px; display:flex; gap:5px; flex-wrap:wrap;">
           <span class="tag tag-{{ .type }}">{{ .type }}</span>
           <span class="tag tag-{{ $priceTag }}">{{ if eq $priceTag "gratis" }}gratis{{ else }}pago{{ end }}</span>
-          {{ if .confirmed }}<span class="tag" style="background:var(--color-pill-bg);color:var(--color-muted);">✓ confirmado</span>{{ end }}
+          {{ if .confirmed }}<span class="tag" style="background:var(--color-pill-bg);color:var(--color-muted);">✓ {{ if eq $lang "es" }}confirmado{{ else }}confirmed{{ end }}</span>{{ end }}
         </div>
         {{ if eq $lang "en" }}
           {{ if .notes_en }}<p class="event-notes" style="margin-top:8px;">{{ .notes_en }}</p>
@@ -132,7 +132,10 @@ function filterEvents() {
   });
 
   const countEl = document.getElementById('event-count');
-  if (countEl) countEl.textContent = visible === 0 ? 'Sin resultados' : visible === 1 ? '1 evento' : `${visible} eventos`;
+  const noResults = {{ if eq $lang "es" }}'Sin resultados'{{ else }}'No results'{{ end }};
+  const singular = {{ if eq $lang "es" }}'1 evento'{{ else }}'1 event'{{ end }};
+  const plural = {{ if eq $lang "es" }}`${visible} eventos`{{ else }}`${visible} events`{{ end }};
+  if (countEl) countEl.textContent = visible === 0 ? noResults : visible === 1 ? singular : plural;
 }
 
 document.addEventListener('DOMContentLoaded', filterEvents);

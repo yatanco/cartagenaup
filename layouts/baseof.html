@@ -16,8 +16,10 @@
       {{ partial "language-switcher.html" . }}
     </div>
     <nav>
+      {{ $cur := .RelPermalink }}
       {{ range .Site.Menus.main }}
-        <a href="{{ .URL }}">{{ .Name }}</a>
+        {{ $active := and (gt (len .URL) 1) (strings.HasPrefix $cur .URL) }}
+        <a href="{{ .URL }}"{{ if $active }} class="active"{{ end }}>{{ .Name }}</a>
       {{ end }}
     </nav>
   </header>
