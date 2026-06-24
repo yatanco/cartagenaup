@@ -5,6 +5,7 @@ end_date: ""
 venue: "Donde Fidel"
 neighborhood: "Centro Histórico"
 type: "music"
+t0: "22:00"
 recurring: "weekly"
 price: "Free entry · Drinks from 15,000 COP"
 confirmed: true

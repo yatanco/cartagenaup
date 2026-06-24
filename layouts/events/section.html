@@ -13,24 +13,126 @@
 
 {{ $sorted := sort $events "date" "asc" }}
 
-{{ range $sorted }}
-<div class="event-card">
-  <h3>{{ .title }}</h3>
-  <div class="card-meta">{{ .date }}{{ with .venue }} · {{ . }}{{ end }}{{ with .neighborhood }}, {{ . }}{{ end }}</div>
-  {{ if .confirmed }}<span class="badge badge-confirmed">{{ if eq $lang "es" }}Confirmado{{ else }}Confirmed{{ end }}</span>{{ end }}
-  {{ with .price }}<p class="card-meta">{{ . }}</p>{{ end }}
-  {{ if eq $lang "en" }}
-    {{ if .notes_en }}<p class="card-note">{{ .notes_en }}</p>{{ else }}{{ with .notes }}<p class="card-note">{{ . }}</p>{{ end }}{{ end }}
-  {{ else }}
-    {{ with .notes }}<p class="card-note">{{ . }}</p>{{ end }}
-  {{ end }}
-  {{ with .maps_link }}<div class="card-links"><a href="{{ . }}" target="_blank" rel="noopener">{{ if eq $lang "es" }}Abrir en mapas{{ else }}Open in Maps{{ end }}</a></div>{{ end }}
+{{/* Search + filter controls */}}
+<div class="events-controls" style="margin-bottom:1.5rem;">
+  <div style="position:relative; margin-bottom:1rem;">
+    <input type="search" id="event-search"
+      placeholder="{{ if eq $lang "es" }}Buscar evento o lugar…{{ else }}Search events or venues…{{ end }}"
+      oninput="filterEvents()"
+      style="width:100%; padding:10px 14px; font-family:inherit; font-size:14px;
+             background:var(--color-surface); border:1px solid var(--color-border);
+             border-radius:6px; color:var(--color-text); outline:none;">
+  </div>
+  <div style="display:flex; gap:8px; flex-wrap:wrap;" id="filter-pills">
+    <span class="filter-pill active" onclick="setFilter('all',this)">{{ if eq $lang "es" }}Todos{{ else }}All{{ end }}</span>
+    <span class="filter-pill" onclick="setFilter('cultural',this)">Cultura</span>
+    <span class="filter-pill" onclick="setFilter('music',this)">Música</span>
+    <span class="filter-pill" onclick="setFilter('gratis',this)">Gratis</span>
+  </div>
 </div>
+<div id="event-count" style="font-size:12px; color:var(--color-muted); margin-bottom:1rem;"></div>
+
+{{/* Day-grouped cards */}}
+{{ $prevDate := "" }}
+{{ range $sorted }}
+  {{ $thumbColor := "#6B6358" }}
+  {{ if eq .type "music" }}{{ $thumbColor = "#C8943A" }}
+  {{ else if eq .type "cultural" }}{{ $thumbColor = "#C45C26" }}
+  {{ else if eq .type "festival" }}{{ $thumbColor = "#D4503A" }}
+  {{ else if eq .type "market" }}{{ $thumbColor = "#4D7C0F" }}
+  {{ else if eq .type "sports" }}{{ $thumbColor = "#075985" }}
+  {{ end }}
+
+  {{ $words := split .title " " }}
+  {{ $i1 := upper (substr (index $words 0) 0 1) }}
+  {{ $i2 := "" }}
+  {{ if gt (len $words) 1 }}{{ $i2 = upper (substr (index $words 1) 0 1) }}{{ end }}
+  {{ $initials := printf "%s%s" $i1 $i2 }}
+
+  {{ $priceTag := "pago" }}
+  {{ if or (strings.Contains (.price | default "") "Free") (strings.Contains (.price | default "") "libre") (strings.Contains (.price | default "") "Gratis") (strings.Contains (.price | default "") "gratis") }}
+    {{ $priceTag = "gratis" }}
+  {{ end }}
+
+  {{ if ne .date $prevDate }}
+    {{ if ne $prevDate "" }}</div>{{ end }}
+    <div class="day-group">
+    <h2 class="day-label">{{ dateFormat "Monday, January 2" .date }}</h2>
+    {{ $prevDate = .date }}
+  {{ end }}
+
+  <article class="event-card"
+    data-tags="{{ .type }}"
+    data-price="{{ $priceTag }}"
+    data-text="{{ .title | lower }} {{ with .venue }}{{ . | lower }}{{ end }} {{ with .neighborhood }}{{ . | lower }}{{ end }}">
+    <div class="event-card-inner">
+      <div class="thumb-initials" style="background: {{ $thumbColor }}">{{ $initials }}</div>
+      <div class="event-time-col">{{ with .t0 }}{{ . }}{{ else }}—{{ end }}</div>
+      <div class="event-vline"></div>
+      <div style="flex:1; min-width:0;">
+        <div class="event-title">{{ .title }}</div>
+        <div class="event-venue">{{ .venue }}{{ if .neighborhood }} · {{ .neighborhood }}{{ end }}</div>
+        <div class="tags" style="margin-top:6px; display:flex; gap:5px; flex-wrap:wrap;">
+          <span class="tag tag-{{ .type }}">{{ .type }}</span>
+          <span class="tag tag-{{ $priceTag }}">{{ if eq $priceTag "gratis" }}gratis{{ else }}pago{{ end }}</span>
+          {{ if .confirmed }}<span class="tag" style="background:var(--color-pill-bg);color:var(--color-muted);">✓ confirmado</span>{{ end }}
+        </div>
+        {{ if eq $lang "en" }}
+          {{ if .notes_en }}<p class="event-notes" style="margin-top:8px;">{{ .notes_en }}</p>
+          {{ else }}{{ with .notes }}<p class="event-notes" style="margin-top:8px;">{{ . }}</p>{{ end }}{{ end }}
+        {{ else }}
+          {{ with .notes }}<p class="event-notes" style="margin-top:8px;">{{ . }}</p>{{ end }}
+        {{ end }}
+        {{ with .maps_link }}
+          <a href="{{ . }}" target="_blank" rel="noopener" class="maps-link">📍 {{ if eq $lang "es" }}Ver en Google Maps{{ else }}Open in Google Maps{{ end }}</a>
+        {{ end }}
+      </div>
+    </div>
+  </article>
 {{ end }}
+{{ if ne $prevDate "" }}</div>{{ end }}
 
 {{ if not $sorted }}
   <p>{{ if eq $lang "es" }}No hay eventos próximos — vuelve el lunes.{{ else }}No upcoming events right now — check back Monday.{{ end }}</p>
 {{ end }}
 
 {{ partial "whatsapp-cta.html" . }}
+
+<script>
+let activeFilter = 'all';
+
+function setFilter(f, el) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  filterEvents();
+}
+
+function filterEvents() {
+  const q = document.getElementById('event-search').value.toLowerCase().trim();
+  const cards = document.querySelectorAll('.event-card');
+  let visible = 0;
+
+  cards.forEach(card => {
+    const tags = card.dataset.tags || '';
+    const price = card.dataset.price || '';
+    const text = card.dataset.text || '';
+    const matchFilter = activeFilter === 'all' || tags.includes(activeFilter) || price === activeFilter;
+    const matchSearch = !q || text.includes(q);
+    const show = matchFilter && matchSearch;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+
+  document.querySelectorAll('.day-group').forEach(group => {
+    const anyVisible = [...group.querySelectorAll('.event-card')].some(c => c.style.display !== 'none');
+    group.style.display = anyVisible ? '' : 'none';
+  });
+
+  const countEl = document.getElementById('event-count');
+  if (countEl) countEl.textContent = visible === 0 ? 'Sin resultados' : visible === 1 ? '1 evento' : `${visible} eventos`;
+}
+
+document.addEventListener('DOMContentLoaded', filterEvents);
+</script>
 {{ end }}

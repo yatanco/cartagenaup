@@ -5,6 +5,7 @@ end_date: ""
 venue: "Museo Naval del Caribe"
 neighborhood: "Centro Histórico"
 type: "cultural"
+t0: "TBC"
 recurring: "one-time"
 price: "Entrada normal al museo"
 confirmed: true

@@ -5,6 +5,7 @@ end_date: ""
 venue: "Espacio Cultural Claustro de la Merced"
 neighborhood: "Centro Histórico"
 type: "cultural"
+t0: "17:00"
 recurring: "one-time"
 price: "Free — open access"
 confirmed: true
