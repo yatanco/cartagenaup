@@ -4,6 +4,11 @@
 {{ $workBase := "/work/" }}
 {{ if eq $lang "es" }}{{ $workBase = "/es/work/" }}{{ end }}
 
+{{/* Pick the right local_note language, fall back to whatever exists */}}
+{{ $note := $d.local_note }}
+{{ if eq $lang "en" }}{{ with $d.local_note_en }}{{ $note = . }}{{ end }}{{ end }}
+{{ if not $note }}{{ with $d.local_note_en }}{{ $note = . }}{{ end }}{{ end }}
+
 {{ if not $d }}
   <p>Listing not found.</p>
 {{ else }}
@@ -27,7 +32,7 @@
     WiFi {{ $d.wifi_down_mbps }}/{{ $d.wifi_up_mbps }} Mbps{{ if $d.ac }} · AC{{ end }} · {{ if eq $lang "es" }}Enchufes{{ else }}Outlets{{ end }}: {{ $d.outlets }}
   </p>
 
-  {{ with $d.local_note }}
+  {{ with $note }}
   <p style="font-size:0.95rem; line-height:1.65; margin:0 0 1rem;">{{ . }}</p>
   {{ end }}
 

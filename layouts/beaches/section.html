@@ -6,6 +6,28 @@
 
 {{ range $key, $beach := hugo.Data.places.beaches }}
   {{ if $beach.active }}
+
+  {{/* Pick language for each prose field, fall back to whatever exists */}}
+  {{ $howTo := $beach.how_to_get_there }}
+  {{ if eq $lang "en" }}{{ with $beach.how_to_get_there_en }}{{ $howTo = . }}{{ end }}{{ end }}
+  {{ if not $howTo }}{{ with $beach.how_to_get_there_en }}{{ $howTo = . }}{{ end }}{{ end }}
+
+  {{ $cost := $beach.cost_range }}
+  {{ if eq $lang "en" }}{{ with $beach.cost_range_en }}{{ $cost = . }}{{ end }}{{ end }}
+  {{ if not $cost }}{{ with $beach.cost_range_en }}{{ $cost = . }}{{ end }}{{ end }}
+
+  {{ $conditions := $beach.current_conditions }}
+  {{ if eq $lang "en" }}{{ with $beach.current_conditions_en }}{{ $conditions = . }}{{ end }}{{ end }}
+  {{ if not $conditions }}{{ with $beach.current_conditions_en }}{{ $conditions = . }}{{ end }}{{ end }}
+
+  {{ $overnight := $beach.overnight_note }}
+  {{ if eq $lang "en" }}{{ with $beach.overnight_note_en }}{{ $overnight = . }}{{ end }}{{ end }}
+  {{ if not $overnight }}{{ with $beach.overnight_note_en }}{{ $overnight = . }}{{ end }}{{ end }}
+
+  {{ $gaviota := $beach.casa_gaviota_note }}
+  {{ if eq $lang "en" }}{{ with $beach.casa_gaviota_note_en }}{{ $gaviota = . }}{{ end }}{{ end }}
+  {{ if not $gaviota }}{{ with $beach.casa_gaviota_note_en }}{{ $gaviota = . }}{{ end }}{{ end }}
+
   <div class="beach-card">
     <h3>{{ $beach.name }}</h3>
     <div class="card-meta">{{ $beach.island | title }}</div>
@@ -14,13 +36,14 @@
       <span class="pill">{{ if eq $lang "es" }}Afluencia{{ else }}Crowd{{ end }}: {{ $beach.crowd_level }}</span>
       {{ range $beach.best_for }}<span class="pill">{{ . }}</span>{{ end }}
     </div>
-    {{ with $beach.how_to_get_there }}<p class="card-note"><strong>{{ if eq $lang "es" }}Cómo llegar{{ else }}Getting there{{ end }}:</strong> {{ . }}</p>{{ end }}
-    {{ with $beach.cost_range }}<p class="card-meta">{{ if eq $lang "es" }}Costo{{ else }}Cost{{ end }}: {{ . }}</p>{{ end }}
-    {{ with $beach.current_conditions }}<p class="card-note"><strong>{{ if eq $lang "es" }}Estado actual{{ else }}Current conditions{{ end }}:</strong> {{ . }}</p>{{ end }}
-    {{ with $beach.overnight_note }}<p class="card-note">{{ . }}</p>{{ end }}
-    {{ with $beach.casa_gaviota_note }}<p class="card-note">{{ . }}</p>{{ end }}
+    {{ with $howTo }}<p class="card-note"><strong>{{ if eq $lang "es" }}Cómo llegar{{ else }}Getting there{{ end }}:</strong> {{ . }}</p>{{ end }}
+    {{ with $cost }}<p class="card-meta">{{ if eq $lang "es" }}Costo{{ else }}Cost{{ end }}: {{ . }}</p>{{ end }}
+    {{ with $conditions }}<p class="card-note"><strong>{{ if eq $lang "es" }}Estado actual{{ else }}Current conditions{{ end }}:</strong> {{ . }}</p>{{ end }}
+    {{ with $overnight }}<p class="card-note">{{ . }}</p>{{ end }}
+    {{ with $gaviota }}<p class="card-note">{{ . }}</p>{{ end }}
     {{ with $beach.maps_link }}<div class="card-links"><a href="{{ . }}" target="_blank" rel="noopener">{{ if eq $lang "es" }}Abrir en mapas{{ else }}Open in Maps{{ end }}</a></div>{{ end }}
   </div>
+
   {{ end }}
 {{ end }}
 

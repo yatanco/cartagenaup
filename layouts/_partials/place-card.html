@@ -2,13 +2,18 @@
 {{ $workBase := "/work/" }}
 {{ if eq $lang "es" }}{{ $workBase = "/es/work/" }}{{ end }}
 
+{{/* Pick the right local_note language, fall back to whatever exists */}}
+{{ $note := .local_note }}
+{{ if eq $lang "en" }}{{ with .local_note_en }}{{ $note = . }}{{ end }}{{ end }}
+{{ if not $note }}{{ with .local_note_en }}{{ $note = . }}{{ end }}{{ end }}
+
 <article class="place-card">
 
   {{ with index .images 0 }}
   <img src="/images/places/work/{{ .file }}"
        alt="{{ .caption }}"
        loading="lazy"
-       style="width:100%; border-radius:6px 6px 0 0; display:block; margin:-1.25rem -1.25rem 1rem; width:calc(100% + 2.5rem); max-height:210px; object-fit:cover;">
+       style="width:calc(100% + 2.5rem); margin:-1.25rem -1.25rem 1rem; max-height:210px; object-fit:cover; display:block; border-radius:6px 6px 0 0;">
   {{ end }}
 
   <h3 style="margin:0 0 0.15rem;">
@@ -24,7 +29,7 @@
     WiFi {{ .wifi_down_mbps }}/{{ .wifi_up_mbps }} Mbps{{ if .ac }} · AC{{ end }} · {{ if eq $lang "es" }}Enchufes{{ else }}Outlets{{ end }}: {{ .outlets }}
   </p>
 
-  {{ with .local_note }}
+  {{ with $note }}
   <p style="font-size:0.9rem; line-height:1.6; margin:0 0 0.75rem;">{{ . }}</p>
   {{ end }}
 
