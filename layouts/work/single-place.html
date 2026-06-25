@@ -8,73 +8,65 @@
   <p>Listing not found.</p>
 {{ else }}
 <article class="place-detail">
+
   {{ with index $d.images 0 }}
   <figure class="card-photo detail-photo">
     <img src="/images/places/work/{{ .file }}" alt="{{ .caption }}" loading="lazy" width="800" height="500">
-    <figcaption>{{ .caption }}</figcaption>
+    {{ with .caption }}<figcaption>{{ . }}</figcaption>{{ end }}
   </figure>
   {{ end }}
 
   <h1>{{ $d.name }}</h1>
-  <div class="card-meta">{{ $d.neighborhood }}</div>
-  {{ with $d.address }}<span class="address">{{ . }}</span>{{ end }}
+  <p style="font-size:0.875rem; color:var(--color-muted); margin:0.15rem 0 0.75rem;">
+    {{ $d.neighborhood }}{{ with $d.address }} · {{ . }}{{ end }}
+  </p>
 
-  {{ if eq $lang "es" }}
-    <span class="badge">Verificado: {{ $d.last_tested }}</span>
-  {{ else }}
-    <span class="badge">Last tested: {{ $d.last_tested }}</span>
+  <span class="badge">{{ if eq $lang "es" }}VERIFICADO{{ else }}VERIFIED{{ end }}: {{ $d.last_tested }}</span>
+
+  <p style="font-size:0.9rem; margin:0.75rem 0;">
+    WiFi {{ $d.wifi_down_mbps }}/{{ $d.wifi_up_mbps }} Mbps{{ if $d.ac }} · AC{{ end }} · {{ if eq $lang "es" }}Enchufes{{ else }}Outlets{{ end }}: {{ $d.outlets }}
+  </p>
+
+  {{ with $d.local_note }}
+  <p style="font-size:0.95rem; line-height:1.65; margin:0 0 1rem;">{{ . }}</p>
   {{ end }}
 
-  <div class="pills">
-    <span class="pill">WiFi {{ $d.wifi_down_mbps }}/{{ $d.wifi_up_mbps }} Mbps</span>
-    {{ if $d.ac }}<span class="pill">AC</span>{{ end }}
-    {{ if eq $lang "es" }}
-      <span class="pill">Enchufes: {{ $d.outlets }}</span>
-      <span class="pill">Ruido: {{ $d.noise_level }}</span>
-      <span class="pill">Video llamadas: {{ $d.video_calls }}</span>
-      {{ if $d.hotspot_warning }}<span class="pill pill-warning">⚠ Ten un hotspot de respaldo</span>{{ end }}
-    {{ else }}
-      <span class="pill">Outlets: {{ $d.outlets }}</span>
-      <span class="pill">Noise: {{ $d.noise_level }}</span>
-      <span class="pill">Video calls: {{ $d.video_calls }}</span>
-      {{ if $d.hotspot_warning }}<span class="pill pill-warning">⚠ Bring a hotspot backup</span>{{ end }}
-    {{ end }}
-  </div>
-
-  {{ with $d.wifi_network }}<p class="card-wifi-network">{{ if eq $lang "es" }}Red{{ else }}Network{{ end }}: {{ . }}</p>{{ end }}
-
-  {{ with $d.local_note }}<p class="card-note">{{ . }}</p>{{ end }}
-  {{ if $d.hotspot_warning }}{{ with $d.hotspot_note }}<p class="card-note card-note--warning">{{ . }}</p>{{ end }}{{ end }}
-
-  <dl class="place-detail-meta">
-    {{ with $d.best_time }}<div><dt>{{ if eq $lang "es" }}Mejor momento{{ else }}Best time{{ end }}</dt><dd>{{ . }}</dd></div>{{ end }}
-    {{ with $d.best_spot }}<div><dt>📍 {{ if eq $lang "es" }}Mejor lugar{{ else }}Best spot{{ end }}</dt><dd>{{ . }}</dd></div>{{ end }}
-    {{ with $d.price_to_stay }}<div><dt>{{ if eq $lang "es" }}Precio para quedarse{{ else }}Price to stay{{ end }}</dt><dd>{{ . }}</dd></div>{{ end }}
-    {{ with $d.hours }}<div><dt>{{ if eq $lang "es" }}Horario{{ else }}Hours{{ end }}</dt><dd>{{ . }}</dd></div>{{ end }}
-  </dl>
+  {{ with $d.hours }}
+  <p style="font-size:0.85rem; color:var(--color-muted); margin:0 0 1rem;">
+    {{ if eq $lang "es" }}Horario{{ else }}Hours{{ end }}: {{ . }}
+  </p>
+  {{ end }}
 
   {{ with $d.related_listing }}
-    {{ $related := index hugo.Data.places.work . }}
-    <p class="card-related">📍 {{ if eq $lang "es" }}También en este lugar{{ else }}Also at this location{{ end }}: <a href="{{ $workBase }}{{ . }}/">{{ with $related }}{{ .name }}{{ else }}{{ . | humanize | title }}{{ end }}</a></p>
+  {{ $related := index hugo.Data.places.work . }}
+  <p style="font-size:0.85rem; color:var(--color-muted); margin:0 0 1rem;">
+    {{ if eq $lang "es" }}También aquí{{ else }}Also here{{ end }}:
+    <a href="{{ $workBase }}{{ . }}/">{{ with $related }}{{ .name }}{{ else }}{{ . | humanize | title }}{{ end }}</a>
+  </p>
   {{ end }}
 
   <div class="detail-actions">
     {{ with $d.maps_link }}
-      <a href="{{ . }}" target="_blank" rel="noopener" class="maps-link">📍 {{ if eq $lang "es" }}Ver en Google Maps{{ else }}Open in Google Maps{{ end }}</a>
+    <a href="{{ . }}" target="_blank" rel="noopener" class="maps-link">
+      📍 {{ if eq $lang "es" }}Ver en Google Maps{{ else }}Open in Google Maps{{ end }}
+    </a>
     {{ end }}
-    <a href="https://wa.me/{{ site.Params.whatsapp }}?text={{ $d.whatsapp_update_text | urlquery }}" class="whatsapp-link">{{ if eq $lang "es" }}¿Algo cambió?{{ else }}Something changed?{{ end }}</a>
+    <a href="https://wa.me/{{ site.Params.whatsapp }}?text={{ $d.whatsapp_update_text | urlquery }}" class="whatsapp-link">
+      {{ if eq $lang "es" }}¿Algo cambió?{{ else }}Something changed?{{ end }}
+    </a>
   </div>
 
   {{ range $i, $img := $d.images }}
     {{ if gt $i 0 }}
     <figure class="card-photo detail-extra-photo">
       <img src="/images/places/work/{{ $img.file }}" alt="{{ $img.caption }}" loading="lazy" width="800" height="500">
-      <figcaption>{{ $img.caption }}</figcaption>
+      {{ with $img.caption }}<figcaption>{{ . }}</figcaption>{{ end }}
     </figure>
     {{ end }}
   {{ end }}
+
 </article>
-{{ end }}
 
 {{ partial "whatsapp-cta.html" . }}
+{{ end }}
 {{ end }}

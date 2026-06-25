@@ -1,55 +1,56 @@
-{{ $place := . }}
 {{ $lang := site.Language.Lang }}
 {{ $workBase := "/work/" }}
 {{ if eq $lang "es" }}{{ $workBase = "/es/work/" }}{{ end }}
-<div class="place-card{{ if $place.hotspot_warning }} place-card--hotspot-warning{{ end }}">
-  {{ with index $place.images 0 }}
-  <figure class="card-photo">
-    <img src="/images/places/work/{{ .file }}" alt="{{ .caption }}" loading="lazy" width="640" height="400">
-    <figcaption>{{ .caption }}</figcaption>
-  </figure>
+
+<article class="place-card">
+
+  {{ with index .images 0 }}
+  <img src="/images/places/work/{{ .file }}"
+       alt="{{ .caption }}"
+       loading="lazy"
+       style="width:100%; border-radius:6px 6px 0 0; display:block; margin:-1.25rem -1.25rem 1rem; width:calc(100% + 2.5rem); max-height:210px; object-fit:cover;">
   {{ end }}
-  <h3><a class="place-title-link" href="{{ $workBase }}{{ $place.slug }}/">{{ $place.name }}</a></h3>
-  <div class="card-meta">{{ $place.neighborhood }}</div>
-  {{ with $place.address }}<span class="address">{{ . }}</span>{{ end }}
-  {{ if eq $lang "es" }}
-    <span class="badge">Verificado: {{ $place.last_tested }}</span>
-  {{ else }}
-    <span class="badge">Last tested: {{ $place.last_tested }}</span>
+
+  <h3 style="margin:0 0 0.15rem;">
+    <a href="{{ $workBase }}{{ .slug }}/" style="color:var(--color-text); text-decoration:none;">{{ .name }}</a>
+  </h3>
+  <p style="font-size:0.8rem; color:var(--color-muted); margin:0 0 0.75rem;">
+    {{ .neighborhood }}{{ with .address }} · {{ . }}{{ end }}
+  </p>
+
+  <span class="badge">{{ if eq $lang "es" }}VERIFICADO{{ else }}VERIFIED{{ end }}: {{ .last_tested }}</span>
+
+  <p style="font-size:0.85rem; margin:0.75rem 0;">
+    WiFi {{ .wifi_down_mbps }}/{{ .wifi_up_mbps }} Mbps{{ if .ac }} · AC{{ end }} · {{ if eq $lang "es" }}Enchufes{{ else }}Outlets{{ end }}: {{ .outlets }}
+  </p>
+
+  {{ with .local_note }}
+  <p style="font-size:0.9rem; line-height:1.6; margin:0 0 0.75rem;">{{ . }}</p>
   {{ end }}
-  <div class="pills">
-    <span class="pill">WiFi {{ $place.wifi_down_mbps }}/{{ $place.wifi_up_mbps }} Mbps</span>
-    {{ if $place.ac }}<span class="pill">AC</span>{{ end }}
-    {{ if eq $lang "es" }}
-      <span class="pill">Enchufes: {{ $place.outlets }}</span>
-      <span class="pill">Ruido: {{ $place.noise_level }}</span>
-      <span class="pill">Video llamadas: {{ $place.video_calls }}</span>
-      {{ if $place.hotspot_warning }}<span class="pill pill-warning">⚠ Ten un hotspot de respaldo</span>{{ end }}
-    {{ else }}
-      <span class="pill">Outlets: {{ $place.outlets }}</span>
-      <span class="pill">Noise: {{ $place.noise_level }}</span>
-      <span class="pill">Video calls: {{ $place.video_calls }}</span>
-      {{ if $place.hotspot_warning }}<span class="pill pill-warning">⚠ Bring a hotspot backup</span>{{ end }}
+
+  {{ with .hours }}
+  <p style="font-size:0.8rem; color:var(--color-muted); margin:0 0 0.75rem;">
+    {{ if eq $lang "es" }}Horario{{ else }}Hours{{ end }}: {{ . }}
+  </p>
+  {{ end }}
+
+  {{ with .related_listing }}
+  {{ $related := index hugo.Data.places.work . }}
+  <p style="font-size:0.8rem; color:var(--color-muted); margin:0 0 0.75rem;">
+    {{ if eq $lang "es" }}También aquí{{ else }}Also here{{ end }}:
+    <a href="{{ $workBase }}{{ . }}/" style="color:var(--color-accent);">{{ with $related }}{{ .name }}{{ else }}{{ . | humanize | title }}{{ end }}</a>
+  </p>
+  {{ end }}
+
+  <p style="font-size:0.8rem; margin:0; display:flex; gap:1rem; flex-wrap:wrap;">
+    {{ with .maps_link }}
+    <a href="{{ . }}" target="_blank" rel="noopener" style="color:var(--color-accent); text-decoration:none;">
+      📍 {{ if eq $lang "es" }}Ver en Maps{{ else }}Open in Maps{{ end }}
+    </a>
     {{ end }}
-  </div>
-  {{ with $place.wifi_network }}
-    <p class="card-wifi-network">{{ if eq $lang "es" }}Red{{ else }}Network{{ end }}: {{ . }}</p>
-  {{ end }}
-  {{ with $place.local_note }}<p class="card-note">{{ . }}</p>{{ end }}
-  {{ with $place.best_spot }}
-    <p class="card-best-spot"><em>📍 {{ if eq $lang "es" }}Mejor lugar{{ else }}Best spot{{ end }}: {{ . }}</em></p>
-  {{ end }}
-  {{ with $place.hours }}
-    <p class="card-meta">{{ if eq $lang "es" }}Horario{{ else }}Hours{{ end }}: {{ . }}</p>
-  {{ end }}
-  {{ with $place.related_listing }}
-    {{ $related := index hugo.Data.places.work . }}
-    <p class="card-related">📍 {{ if eq $lang "es" }}También en este lugar{{ else }}Also at this location{{ end }}: <a href="{{ $workBase }}{{ . }}/">{{ with $related }}{{ .name }}{{ else }}{{ . | humanize | title }}{{ end }}</a></p>
-  {{ end }}
-  <div class="card-links">
-    {{ with $place.maps_link }}
-      <a href="{{ . }}" target="_blank" rel="noopener" class="maps-link">📍 {{ if eq $lang "es" }}Ver en Google Maps{{ else }}Open in Google Maps{{ end }}</a>
-    {{ end }}
-    <a href="https://wa.me/{{ site.Params.whatsapp }}?text={{ $place.whatsapp_update_text | urlquery }}">{{ if eq $lang "es" }}¿Algo cambió?{{ else }}Something changed?{{ end }}</a>
-  </div>
-</div>
+    <a href="https://wa.me/{{ site.Params.whatsapp }}?text={{ .whatsapp_update_text | urlquery }}" style="color:var(--color-muted); text-decoration:underline;">
+      {{ if eq $lang "es" }}¿Algo cambió?{{ else }}Something changed?{{ end }}
+    </a>
+  </p>
+
+</article>
