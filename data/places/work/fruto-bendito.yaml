@@ -11,6 +11,10 @@ video_calls: "marginal"
 outlets: "limited"
 ac: true
 noise_level: "quiet"
+images:
+  - file: fruto-bendito.jpg
+    caption: "Fruto Bendito café inside the Claustro"
+    credit: "Cartagena Up"
 best_time: "Morning — quieter before the Claustro fills with visitors"
 best_spot: "Three tables at the entrance right side, closest to the two outlets"
 price_to_stay: "Coffee, chai, pastries, cookies, brownies, fruit sorbets — mid-range for the area"
