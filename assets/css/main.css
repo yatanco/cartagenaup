@@ -2,16 +2,18 @@
   --color-text: #1a1a1a;
   --color-bg: #fafaf8;
   --color-accent: #c8501a;
-  --color-muted: #666;
+  --color-muted: #6b6b6b;
   --color-badge-bg: #c8501a;
   --color-badge-text: #fff;
-  --color-pill-bg: #efefeb;
-  --color-pill-text: #333;
+  --color-pill-bg: #eeede8;
+  --color-pill-text: #444;
   --color-warning: #B45309;
   --color-warning-bg: #FEF3C7;
   --color-card-border: #e4e4e0;
   --color-border: #e4e4e0;
   --color-surface: #fff;
+  --radius-card: 8px;
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.07), 0 0 0 1px var(--color-card-border);
 }
 
 *, *::before, *::after {
@@ -29,7 +31,7 @@ html {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   max-width: 680px;
   margin: 0 auto;
   padding: 0 1.25rem;
@@ -39,7 +41,7 @@ body {
 
 header {
   padding: 1.5rem 0 1rem;
-  border-bottom: 1px solid var(--color-card-border);
+  border-bottom: 1px solid var(--color-border);
   margin-bottom: 2rem;
 }
 
@@ -51,6 +53,7 @@ header {
 }
 
 header .site-title {
+  font-family: 'Lora', Georgia, serif;
   font-size: 1.1rem;
   font-weight: 700;
   text-decoration: none;
@@ -67,16 +70,18 @@ nav {
 
 nav a {
   font-size: 0.875rem;
+  font-weight: 500;
   text-decoration: none;
   color: var(--color-muted);
+  transition: color 0.12s;
 }
 
-nav a:hover {
+nav a:hover,
+nav a.active {
   color: var(--color-accent);
 }
 
 nav a.active {
-  color: var(--color-accent);
   font-weight: 600;
 }
 
@@ -95,6 +100,7 @@ nav a.active {
 .lang-link {
   color: var(--color-muted);
   text-decoration: none;
+  transition: color 0.12s;
 }
 
 .lang-link:hover {
@@ -106,33 +112,45 @@ main {
 }
 
 footer {
-  padding: 1.5rem 0;
-  border-top: 1px solid var(--color-card-border);
+  padding: 1.75rem 0;
+  border-top: 1px solid var(--color-border);
   font-size: 0.8rem;
   color: var(--color-muted);
   margin-top: 2rem;
 }
 
+/* ---- Focus ---- */
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
 /* ---- Typography ---- */
+
+h1, h2 {
+  font-family: 'Lora', Georgia, 'Times New Roman', serif;
+}
 
 h1 {
   font-size: 1.75rem;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.2;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   margin-bottom: 0.5rem;
 }
 
 h2 {
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: 1.2rem;
+  font-weight: 600;
   letter-spacing: -0.01em;
   margin: 2rem 0 0.75rem;
 }
 
 h3 {
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 600;
   margin-bottom: 0.25rem;
 }
 
@@ -145,9 +163,14 @@ a {
   color: var(--color-accent);
 }
 
+strong, b {
+  font-weight: 600;
+}
+
 .subhead {
-  font-size: 1rem;
+  font-size: 1.05rem;
   color: var(--color-muted);
+  line-height: 1.5;
   margin-bottom: 0.5rem;
 }
 
@@ -160,14 +183,15 @@ a {
 /* ---- Badge & Pills ---- */
 
 .badge {
-  display: inline-block;
-  font-size: 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.68rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   background: var(--color-badge-bg);
   color: var(--color-badge-text);
-  padding: 0.15em 0.5em;
+  padding: 0.2em 0.55em;
   border-radius: 3px;
   vertical-align: middle;
   margin-bottom: 0.5rem;
@@ -181,15 +205,16 @@ a {
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem;
-  margin: 0.5rem 0;
+  margin: 0.6rem 0;
 }
 
 .pill {
   display: inline-block;
-  font-size: 0.75rem;
+  font-size: 0.73rem;
+  font-weight: 500;
   background: var(--color-pill-bg);
   color: var(--color-pill-text);
-  padding: 0.2em 0.6em;
+  padding: 0.22em 0.65em;
   border-radius: 100px;
   white-space: nowrap;
 }
@@ -205,6 +230,7 @@ a {
 }
 
 .place-title-link:hover {
+  color: var(--color-accent);
   text-decoration: underline;
 }
 
@@ -227,6 +253,8 @@ a {
   text-decoration: underline;
 }
 
+/* ---- Place detail ---- */
+
 .place-detail {
   padding-bottom: 1rem;
 }
@@ -236,16 +264,24 @@ a {
 }
 
 .place-detail-meta {
-  margin: 1rem 0;
+  margin: 1.25rem 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.place-detail-meta > div {
   display: grid;
-  gap: 0.5rem;
+  grid-template-columns: 130px 1fr;
+  gap: 0.25rem 1rem;
+  align-items: baseline;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .place-detail-meta dt {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   color: var(--color-muted);
 }
 
@@ -258,12 +294,16 @@ a {
   background: var(--color-warning-bg);
   color: var(--color-warning);
   padding: 0.5rem 0.75rem;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 0.85rem;
+  margin: 0.5rem 0;
 }
 
 .detail-photo img {
-  height: 320px;
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: var(--radius-card);
 }
 
 .detail-extra-photo {
@@ -275,13 +315,14 @@ a {
   gap: 1rem;
   flex-wrap: wrap;
   align-items: center;
-  margin: 1rem 0;
+  margin: 1.25rem 0;
   font-size: 0.875rem;
 }
 
 .whatsapp-link {
   color: var(--color-muted);
   text-decoration: none;
+  transition: color 0.12s;
 }
 
 .whatsapp-link:hover {
@@ -306,20 +347,16 @@ a {
   margin: 0.5rem 0;
 }
 
-.place-card--hotspot-warning {
-  border-left: 3px solid var(--color-warning);
-}
-
 /* ---- Cards ---- */
 
 .place-card,
 .event-card,
 .beach-card {
-  border: 1px solid var(--color-card-border);
-  border-radius: 6px;
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
   padding: 1.25rem;
   margin-bottom: 1.25rem;
-  background: #fff;
 }
 
 .place-card h3,
@@ -328,20 +365,26 @@ a {
   font-size: 1.05rem;
 }
 
+.place-card--hotspot-warning {
+  box-shadow: none;
+  border: 1px solid var(--color-card-border);
+  border-left: 3px solid var(--color-warning);
+}
+
 .card-photo {
   margin: -1.25rem -1.25rem 1rem;
 }
 
 .card-photo img {
   width: 100%;
-  height: 220px;
+  height: 210px;
   object-fit: cover;
   display: block;
-  border-radius: 5px 5px 0 0;
+  border-radius: calc(var(--radius-card) - 1px) calc(var(--radius-card) - 1px) 0 0;
 }
 
 .card-photo figcaption {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: var(--color-muted);
   padding: 0.3rem 0.25rem 0;
 }
@@ -356,6 +399,7 @@ a {
   font-size: 0.9rem;
   color: var(--color-text);
   margin: 0.5rem 0;
+  line-height: 1.55;
 }
 
 .card-links {
@@ -364,6 +408,7 @@ a {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 /* ---- Section teasers on home ---- */
@@ -372,16 +417,23 @@ a {
   margin-top: 2rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.25rem;
 }
 
 .teaser {
   border-left: 3px solid var(--color-accent);
-  padding-left: 1rem;
+  padding: 0.65rem 0.75rem 0.65rem 1rem;
+  border-radius: 0 6px 6px 0;
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.teaser:hover {
+  transform: translateX(5px);
+  background: rgba(200, 80, 26, 0.04);
 }
 
 .teaser h2 {
-  margin: 0 0 0.2rem;
+  margin: 0 0 0.15rem;
   font-size: 1rem;
 }
 
@@ -394,16 +446,14 @@ a {
 .teaser a {
   font-size: 0.8rem;
   display: inline-block;
-  margin-top: 0.25rem;
+  margin-top: 0.3rem;
 }
 
 /* ---- WhatsApp CTA ---- */
 
 .whatsapp-cta {
-  background: #f0faf0;
-  border: 1px solid #c3e6c3;
-  border-radius: 6px;
-  padding: 1.1rem 1.25rem;
+  border-left: 3px solid #48bb78;
+  padding: 0.6rem 0 0.6rem 1rem;
   margin-top: 2.5rem;
   font-size: 0.9rem;
 }
@@ -411,6 +461,47 @@ a {
 .whatsapp-cta a {
   font-weight: 600;
   color: #1a7a2e;
+}
+
+/* ---- Events controls ---- */
+
+.events-controls {
+  margin-bottom: 1.5rem;
+}
+
+.search-wrapper {
+  margin-bottom: 1rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 14px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  color: var(--color-text);
+  outline: none;
+  transition: border-color 0.15s;
+  -webkit-appearance: none;
+}
+
+.search-input:focus {
+  border-color: var(--color-text);
+}
+
+.filter-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.event-count {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  margin-bottom: 1rem;
+  min-height: 1.2em;
 }
 
 /* ---- Event cards v2 ---- */
@@ -422,25 +513,32 @@ a {
   border-radius: 4px;
   display: inline-block;
 }
-.tag-music    { background: #FEF3C7; color: #92400E; }
-.tag-cultural { background: #FDF4E7; color: #92400E; }
-.tag-festival { background: #FDEEE8; color: #9A3412; }
-.tag-market   { background: #F0FDF4; color: #166534; }
-.tag-sports   { background: #F0F9FF; color: #075985; }
+.tag-music      { background: #FEF3C7; color: #92400E; }
+.tag-cultural   { background: #FDF4E7; color: #92400E; }
+.tag-festival   { background: #FDEEE8; color: #9A3412; }
+.tag-market     { background: #F0FDF4; color: #166534; }
+.tag-sports     { background: #F0F9FF; color: #075985; }
 .tag-gratis     { background: #ECFDF5; color: #065F46; }
 .tag-pago       { background: #FFF7ED; color: #9A3412; }
 .tag-taller     { background: #EFF6FF; color: #1D4ED8; }
-.tag-exposicion { background: #F5F3FF; color: #6D28D9; }
+.tag-exposicion { background: #F0F9FF; color: #075985; }
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 6px;
+}
 
 .thumb-initials {
   flex-shrink: 0;
-  width: 52px;
-  height: 52px;
+  width: 44px;
+  height: 44px;
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   color: white;
   letter-spacing: 0.03em;
@@ -448,11 +546,11 @@ a {
 
 .event-time-col {
   flex-shrink: 0;
-  min-width: 44px;
+  min-width: 40px;
   text-align: right;
   font-size: 13px;
   font-weight: 600;
-  color: var(--color-text);
+  color: var(--color-muted);
   padding-top: 2px;
 }
 
@@ -467,6 +565,11 @@ a {
   display: flex;
   gap: 12px;
   align-items: flex-start;
+}
+
+.event-content {
+  flex: 1;
+  min-width: 0;
 }
 
 .event-title {
@@ -485,12 +588,23 @@ a {
 .event-notes {
   font-size: 0.85rem;
   color: var(--color-text);
-  margin: 0;
+  margin: 8px 0 0;
+  line-height: 1.5;
+}
+
+.event-until {
+  font-size: 0.72rem;
+  color: var(--color-muted);
+  margin-top: 4px;
 }
 
 .day-label {
-  font-size: 1rem;
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  font-size: 0.72rem;
   font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--color-muted);
   padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--color-border);
   margin-bottom: 1rem;
@@ -508,7 +622,7 @@ a {
   font-weight: 600;
   padding: 5px 14px;
   border-radius: 999px;
-  border: 1px solid var(--color-border);
+  border: 1.5px solid var(--color-border);
   background: var(--color-surface);
   color: var(--color-muted);
   cursor: pointer;
@@ -516,20 +630,59 @@ a {
   user-select: none;
   transition: all 0.15s;
 }
+
 .filter-pill:hover {
   border-color: var(--color-text);
   color: var(--color-text);
 }
+
 .filter-pill.active {
   background: var(--color-accent);
   color: white;
   border-color: var(--color-accent);
 }
 
+/* ---- Homepage hero ---- */
+
+.page-home h1 {
+  font-size: 2.5rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.75rem;
+}
+
+/* ---- Load animations ---- */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.page-home h1                                      { animation: fadeUp 0.45s ease both; }
+.page-home .subhead                                { animation: fadeUp 0.45s 0.08s ease both; }
+.page-home .last-updated                           { animation: fadeUp 0.45s 0.14s ease both; }
+.page-home .section-teasers .teaser:nth-child(1)   { animation: fadeUp 0.45s 0.22s ease both; }
+.page-home .section-teasers .teaser:nth-child(2)   { animation: fadeUp 0.45s 0.30s ease both; }
+.page-home .section-teasers .teaser:nth-child(3)   { animation: fadeUp 0.45s 0.38s ease both; }
+.page-home .whatsapp-cta                           { animation: fadeUp 0.45s 0.44s ease both; }
+
+/* ---- Reduced motion ---- */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 /* ---- Responsive ---- */
 
 @media (max-width: 480px) {
-  h1 {
-    font-size: 1.4rem;
+  h1 { font-size: 1.4rem; }
+  .page-home h1 { font-size: 2rem; }
+  .place-detail-meta > div {
+    grid-template-columns: 1fr;
+    gap: 0.1rem;
+    padding: 0.5rem 0;
   }
 }

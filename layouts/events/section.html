@@ -6,9 +6,14 @@
 {{ $today := now.Format "2006-01-02" }}
 {{ $events := slice }}
 {{ range $key, $event := hugo.Data.events }}
-  {{ $cutoff := $event.date }}
-  {{ if and $event.end_date (ne $event.end_date "") }}{{ $cutoff = $event.end_date }}{{ end }}
-  {{ if and $event.active (ge $cutoff $today) }}
+  {{ $showEvent := false }}
+  {{ if ge $event.date $today }}
+    {{ $showEvent = true }}
+  {{ end }}
+  {{ if and $event.end_date (ge $event.end_date $today) }}
+    {{ $showEvent = true }}
+  {{ end }}
+  {{ if and $event.active $showEvent }}
     {{ $events = $events | append $event }}
   {{ end }}
 {{ end }}
@@ -16,23 +21,20 @@
 {{ $sorted := sort $events "date" "asc" }}
 
 {{/* Search + filter controls */}}
-<div class="events-controls" style="margin-bottom:1.5rem;">
-  <div style="position:relative; margin-bottom:1rem;">
-    <input type="search" id="event-search"
+<div class="events-controls">
+  <div class="search-wrapper">
+    <input type="search" id="event-search" class="search-input"
       placeholder="{{ if eq $lang "es" }}Buscar evento o lugar…{{ else }}Search events or venues…{{ end }}"
-      oninput="filterEvents()"
-      style="width:100%; padding:10px 14px; font-family:inherit; font-size:14px;
-             background:var(--color-surface); border:1px solid var(--color-border);
-             border-radius:6px; color:var(--color-text); outline:none;">
+      oninput="filterEvents()">
   </div>
-  <div style="display:flex; gap:8px; flex-wrap:wrap;" id="filter-pills">
+  <div class="filter-row" id="filter-pills">
     <span class="filter-pill active" onclick="setFilter('all',this)">{{ if eq $lang "es" }}Todos{{ else }}All{{ end }}</span>
     <span class="filter-pill" onclick="setFilter('cultural',this)">{{ if eq $lang "es" }}Cultura{{ else }}Culture{{ end }}</span>
     <span class="filter-pill" onclick="setFilter('music',this)">{{ if eq $lang "es" }}Música{{ else }}Music{{ end }}</span>
     <span class="filter-pill" onclick="setFilter('gratis',this)">{{ if eq $lang "es" }}Gratis{{ else }}Free{{ end }}</span>
   </div>
 </div>
-<div id="event-count" style="font-size:12px; color:var(--color-muted); margin-bottom:1rem;"></div>
+<div id="event-count" class="event-count"></div>
 
 {{/* Day-grouped cards */}}
 {{ $prevDate := "" }}
@@ -43,6 +45,7 @@
   {{ else if eq .type "festival" }}{{ $thumbColor = "#D4503A" }}
   {{ else if eq .type "market" }}{{ $thumbColor = "#4D7C0F" }}
   {{ else if eq .type "sports" }}{{ $thumbColor = "#075985" }}
+  {{ else if eq .type "exposicion" }}{{ $thumbColor = "#075985" }}
   {{ end }}
 
   {{ $words := split .title " " }}
@@ -71,19 +74,22 @@
       <div class="thumb-initials" style="background: {{ $thumbColor }}">{{ $initials }}</div>
       <div class="event-time-col">{{ with .t0 }}{{ . }}{{ else }}—{{ end }}</div>
       <div class="event-vline"></div>
-      <div style="flex:1; min-width:0;">
+      <div class="event-content">
         <div class="event-title">{{ .title }}</div>
         <div class="event-venue">{{ .venue }}{{ if .neighborhood }} · {{ .neighborhood }}{{ end }}</div>
-        <div class="tags" style="margin-top:6px; display:flex; gap:5px; flex-wrap:wrap;">
+        <div class="tags">
           <span class="tag tag-{{ .type }}">{{ .type }}</span>
           <span class="tag tag-{{ $priceTag }}">{{ if eq $priceTag "gratis" }}gratis{{ else }}pago{{ end }}</span>
           {{ if .confirmed }}<span class="tag" style="background:var(--color-pill-bg);color:var(--color-muted);">✓ {{ if eq $lang "es" }}confirmado{{ else }}confirmed{{ end }}</span>{{ end }}
         </div>
         {{ if eq $lang "en" }}
-          {{ if .notes_en }}<p class="event-notes" style="margin-top:8px;">{{ .notes_en }}</p>
-          {{ else }}{{ with .notes }}<p class="event-notes" style="margin-top:8px;">{{ . }}</p>{{ end }}{{ end }}
+          {{ if .notes_en }}<p class="event-notes">{{ .notes_en }}</p>
+          {{ else }}{{ with .notes }}<p class="event-notes">{{ . }}</p>{{ end }}{{ end }}
         {{ else }}
-          {{ with .notes }}<p class="event-notes" style="margin-top:8px;">{{ . }}</p>{{ end }}
+          {{ with .notes }}<p class="event-notes">{{ . }}</p>{{ end }}
+        {{ end }}
+        {{ with .end_date }}
+          <p class="event-until">{{ if eq $lang "es" }}Hasta el {{ . }}{{ else }}On until {{ . }}{{ end }}</p>
         {{ end }}
         {{ with .maps_link }}
           <a href="{{ . }}" target="_blank" rel="noopener" class="maps-link">📍 {{ if eq $lang "es" }}Ver en Google Maps{{ else }}Open in Google Maps{{ end }}</a>
