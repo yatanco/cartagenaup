@@ -79,7 +79,7 @@
         <div class="event-venue">{{ .venue }}{{ if .neighborhood }} · {{ .neighborhood }}{{ end }}</div>
         <div class="tags">
           <span class="tag tag-{{ .type }}">{{ .type }}</span>
-          <span class="tag tag-{{ $priceTag }}">{{ if eq $priceTag "gratis" }}gratis{{ else }}pago{{ end }}</span>
+          <span class="tag tag-{{ $priceTag }}">{{ if eq $priceTag "gratis" }}{{ if eq $lang "es" }}gratis{{ else }}Free{{ end }}{{ else }}{{ if eq $lang "es" }}pago{{ else }}Paid{{ end }}{{ end }}</span>
           {{ if .confirmed }}<span class="tag" style="background:var(--color-pill-bg);color:var(--color-muted);">✓ {{ if eq $lang "es" }}confirmado{{ else }}confirmed{{ end }}</span>{{ end }}
         </div>
         {{ if eq $lang "en" }}
