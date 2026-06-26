@@ -6,10 +6,6 @@
   <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} · {{ .Site.Title }}{{ end }}</title>
   <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
   <link rel="canonical" href="{{ .Permalink }}">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=DM+Sans:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=DM+Sans:wght@400;500&display=swap"></noscript>
   {{- $css := resources.Get "css/main.css" | minify }}
   <style>
 :root{--color-bg:#FAF7F2;--color-text:#1C1A17;
@@ -19,8 +15,9 @@
 --color-badge-text:#FFFFFF;}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--color-bg);color:var(--color-text);
-font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',
-system-ui,sans-serif;font-size:1rem;line-height:1.7;}
+font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+font-size:1rem;line-height:1.7;}
+h1,h2,h3{font-family:Georgia,'Times New Roman',serif;}
 .site-container{max-width:680px;margin:0 auto;
 padding:0 1.25rem;}
 header{padding:1.25rem 0;
