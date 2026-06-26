@@ -16,9 +16,9 @@
        style="width:calc(100% + 2.5rem); margin:-1.25rem -1.25rem 1rem; max-height:210px; object-fit:cover; display:block; border-radius:6px 6px 0 0;">
   {{ end }}
 
-  <h3 style="margin:0 0 0.15rem;">
+  <h2 style="margin:0 0 0.15rem; font-size:1.1rem;">
     <a href="{{ $workBase }}{{ .slug }}/" style="color:var(--color-text); text-decoration:none;">{{ .name }}</a>
-  </h3>
+  </h2>
   <p style="font-size:0.8rem; color:var(--color-muted); margin:0 0 0.75rem;">
     {{ .neighborhood }}{{ with .address }} · {{ . }}{{ end }}
   </p>

@@ -1,20 +1,26 @@
 # Cartagena Up
 
-A locally verified, bilingual guide to Cartagena, Colombia —
-cafés, coworking spaces, events, and beaches, updated by
-someone who lives here.
+A locally verified, bilingual guide to Cartagena, Colombia.
+WiFi-tested work spots, current events, and honest beach
+logistics — by someone who lives here.
 
 ## Work in Cartagena
 WiFi-tested cafés and coworking spaces, verified in person.
-/work/
+https://cartagenaup.com/work/
 
-## This Week in Cartagena
+## Esta Semana / This Week
 Current events, cultural programming, music, and nightlife.
-/events/
+https://cartagenaup.com/events/
 
 ## Beaches & Islands
 Honest logistics for Barú, Playa Blanca, and the Rosario Islands.
-/beaches/
+https://cartagenaup.com/beaches/
 
 ## En Español
-/es/
+https://cartagenaup.com/es/
+
+## Work spots verified
+https://cartagenaup.com/work/claustro-la-merced/
+https://cartagenaup.com/work/fruto-bendito/
+https://cartagenaup.com/work/concreto-bocagrande/
+https://cartagenaup.com/work/la-triada-manga/
