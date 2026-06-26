@@ -9,12 +9,29 @@
 
 <article class="place-card">
 
-  {{ with index .images 0 }}
-  <img src="/images/places/work/{{ .file }}"
-       alt="{{ .caption }}"
-       loading="lazy"
-       style="width:calc(100% + 2.5rem); margin:-1.25rem -1.25rem 1rem; max-height:210px; object-fit:cover; display:block; border-radius:6px 6px 0 0;">
+{{ if .images }}
+  {{ $img := index .images 0 }}
+  <picture>
+    <source
+      srcset="/images/places/work/{{ $img.file | replaceRE "\\.jpg$" ".webp" }}"
+      type="image/webp">
+    <img
+      src="/images/places/work/{{ $img.file }}"
+      alt="{{ $img.caption }}"
+      loading="lazy"
+      width="1200"
+      height="675"
+      style="width:100%; border-radius:6px 6px 0 0;
+             display:block; margin-bottom:1rem;
+             max-height:220px; object-fit:cover;">
+  </picture>
+  {{ if $img.caption }}
+    <p style="font-size:0.75rem; color:var(--color-muted);
+              margin-top:-0.75rem; margin-bottom:1rem;">
+      {{ $img.caption }}
+    </p>
   {{ end }}
+{{ end }}
 
   <h2 style="margin:0 0 0.15rem; font-size:1.1rem;">
     <a href="{{ $workBase }}{{ .slug }}/" style="color:var(--color-text); text-decoration:none;">{{ .name }}</a>

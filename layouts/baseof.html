@@ -11,7 +11,29 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=DM+Sans:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=DM+Sans:wght@400;500&display=swap"></noscript>
   {{- $css := resources.Get "css/main.css" | minify }}
-  <link rel="stylesheet" href="{{ $css.RelPermalink }}">
+  <style>
+:root{--color-bg:#FAF7F2;--color-text:#1C1A17;
+--color-accent:#C45C26;--color-accent-hover:#A34A1E;
+--color-muted:#4A4540;--color-surface:#F0EBE1;
+--color-border:#DDD5C8;--color-badge-bg:#C45C26;
+--color-badge-text:#FFFFFF;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--color-bg);color:var(--color-text);
+font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',
+system-ui,sans-serif;font-size:1rem;line-height:1.7;}
+.site-container{max-width:680px;margin:0 auto;
+padding:0 1.25rem;}
+header{padding:1.25rem 0;
+border-bottom:1px solid var(--color-border);}
+h1{font-size:clamp(2rem,5vw,3rem);line-height:1.15;
+font-weight:700;}
+</style>
+  <link rel="preload" href="{{ $css.RelPermalink }}"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="{{ $css.RelPermalink }}">
+  </noscript>
 {{ if not hugo.IsServer }}
 {{ with .Site.Config.Services.GoogleAnalytics.ID }}
 <script async src="https://www.googletagmanager.com/gtag/js?id={{ . }}"></script>
