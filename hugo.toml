@@ -1,6 +1,7 @@
 baseURL = 'https://cartagenaup.com/'
 title = 'Cartagena Up'
 defaultContentLanguage = 'en'
+defaultContentLanguageInSubdir = false
 
 [params]
   description = "Cartagena, actually current. WiFi-tested work spots, current events, and honest beach logistics."
@@ -10,6 +11,8 @@ defaultContentLanguage = 'en'
 [languages]
   [languages.en]
     label = "English"
+    locale = "en-US"
+    disabled = false
     weight = 1
     contentDir = "content/en"
 

@@ -75,6 +75,42 @@ Three files required:
 - `notes` field: Spanish; `notes_en` field: English translation
 - `active: true` required for event to appear
 
+## Hugo Version & Docs
+
+This site runs Hugo v0.163.x (latest stable).
+Hugo changes fast — always verify against current docs.
+
+Before writing or modifying any Hugo template, configuration,
+or build-related code, fetch and check the relevant page at:
+https://gohugo.io/documentation/
+
+Key pages to check for common tasks:
+- Template lookup: https://gohugo.io/templates/lookup-order/
+- Data templates: https://gohugo.io/templates/data/
+- Multilingual: https://gohugo.io/content-management/multilingual/
+- Configuration: https://gohugo.io/configuration/
+- Sitemap: https://gohugo.io/templates/sitemap/
+
+Never rely on memory for Hugo syntax — the template system
+changed significantly in v0.146.0 and continues to evolve.
+When in doubt, fetch the docs first.
+
+## Multilingual sitemap behaviour (Hugo constraint)
+
+With `defaultContentLanguageInSubdir = false`, Hugo generates:
+- `/sitemap.xml` — sitemap index (references /en/ and /es/ sitemaps)
+- `/en/sitemap.xml` — English pages sitemap (URLs are at root: /work/, /events/)
+- `/es/sitemap.xml` — Spanish pages sitemap (URLs at /es/work/, etc.)
+
+The `/en/sitemap.xml` reference in the index is a Hugo architectural
+constraint, not a bug. Page URLs inside are correct (at root).
+For Google Search Console submit `/sitemap.xml` — Google follows
+the index, reads the correct root-level page URLs, and indexes correctly.
+
+Do not attempt to change this with per-language baseURL settings —
+that triggers "multihost mode" which outputs each language into
+a separate directory (public/en/, public/es/) which is not what we want.
+
 ## Key bilingual strings reference
 | Label | ES | EN |
 |---|---|---|
