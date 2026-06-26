@@ -62,3 +62,7 @@ defaultContentLanguageInSubdir = false
   name = "Acerca de"
   url = "/es/about/"
   weight = 4
+
+[services]
+  [services.googleAnalytics]
+    ID = 'G-113VHTKQ0K'

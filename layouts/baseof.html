@@ -12,6 +12,17 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=DM+Sans:wght@400;500&display=swap"></noscript>
   {{- $css := resources.Get "css/main.css" | minify }}
   <link rel="stylesheet" href="{{ $css.RelPermalink }}">
+{{ if not hugo.IsServer }}
+{{ with .Site.Config.Services.GoogleAnalytics.ID }}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ . }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '{{ . }}');
+</script>
+{{ end }}
+{{ end }}
 </head>
 <body{{ if .IsHome }} class="page-home"{{ end }}>
   <header>
