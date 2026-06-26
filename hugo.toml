@@ -34,11 +34,6 @@ defaultContentLanguageInSubdir = false
   weight = 2
 
 [[languages.en.menus.main]]
-  name = "Beaches & Islands"
-  url = "/beaches/"
-  weight = 3
-
-[[languages.en.menus.main]]
   name = "About"
   url = "/about/"
   weight = 4
@@ -52,11 +47,6 @@ defaultContentLanguageInSubdir = false
   name = "Esta Semana"
   url = "/es/events/"
   weight = 2
-
-[[languages.es.menus.main]]
-  name = "Playas e Islas"
-  url = "/es/beaches/"
-  weight = 3
 
 [[languages.es.menus.main]]
   name = "Acerca de"
