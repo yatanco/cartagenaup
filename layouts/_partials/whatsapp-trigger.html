@@ -1,0 +1,7 @@
+{{ $isEs := eq site.Language.Lang "es" }}
+<div class="whatsapp-cta">
+  <button onclick="document.getElementById('wa-modal').style.display='flex'"
+    class="whatsapp-trigger">
+    {{ if $isEs }}¿Necesitas ayuda local? Escríbenos{{ else }}Need a local tip? Message us{{ end }}
+  </button>
+</div>

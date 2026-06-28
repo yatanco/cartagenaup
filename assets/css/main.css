@@ -541,6 +541,166 @@ strong, b {
   color: #1a7a2e;
 }
 
+.whatsapp-trigger {
+  color: #1a7a2e;
+  font-weight: 600;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
+  text-decoration: underline;
+  padding: 0;
+}
+
+/* ---- WhatsApp modal ---- */
+
+.wa-inner {
+  background: var(--color-bg);
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 360px;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.wa-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--color-muted);
+  line-height: 1;
+  padding: 4px;
+}
+
+.wa-tabs {
+  display: flex;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+}
+
+.wa-tab {
+  flex: 1;
+  padding: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  background: var(--color-surface);
+  color: var(--color-muted);
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.wa-tab-active {
+  background: var(--color-accent) !important;
+  color: white !important;
+}
+
+.wa-title {
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: Georgia, serif;
+  color: var(--color-text);
+  margin: 0 0 4px;
+}
+
+.wa-sub {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  margin: 0 0 1.25rem;
+}
+
+.wa-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  letter-spacing: 0.08em;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.wa-topics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 1.25rem;
+}
+
+.wa-topic {
+  padding: 10px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-surface);
+  cursor: pointer;
+  font-size: 0.82rem;
+  color: var(--color-text);
+  text-align: center;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.wa-topic:hover { border-color: var(--color-accent); }
+
+.wa-topic.wa-active {
+  border-color: var(--color-accent);
+  background: rgba(200, 80, 26, 0.06);
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.wa-types {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.wa-type {
+  padding: 5px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  background: var(--color-surface);
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: var(--color-text);
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.wa-type:hover { border-color: var(--color-accent); }
+
+.wa-type.wa-active {
+  border-color: var(--color-accent);
+  background: rgba(200, 80, 26, 0.06);
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.wa-send {
+  width: 100%;
+  padding: 12px;
+  background: #25D366;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.wa-send:hover { background: #1fba59; }
+
 /* ---- Events controls ---- */
 
 .events-controls {

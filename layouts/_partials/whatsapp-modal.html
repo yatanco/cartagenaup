@@ -1,0 +1,179 @@
+{{ $wa := site.Params.whatsapp | replaceRE "\\+" "" }}
+{{ $isEs := eq site.Language.Lang "es" }}
+
+<div id="wa-modal"
+  style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;
+         z-index:9999;background:rgba(0,0,0,0.5);
+         align-items:center;justify-content:center;padding:1rem"
+  onclick="if(event.target===this)this.style.display='none'">
+
+  <div class="wa-inner">
+
+    <button onclick="document.getElementById('wa-modal').style.display='none'"
+      class="wa-close" aria-label="Close">✕</button>
+
+    <div class="wa-tabs">
+      <button onclick="waTab('ask',this)" id="wa-tab-ask"
+        class="wa-tab wa-tab-active">
+        {{ if $isEs }}Necesito ayuda{{ else }}Need help{{ end }}
+      </button>
+      <button onclick="waTab('suggest',this)" id="wa-tab-suggest"
+        class="wa-tab">
+        {{ if $isEs }}Sugerir un lugar{{ else }}Suggest a place{{ end }}
+      </button>
+    </div>
+
+    <div id="wa-panel-ask">
+      <p class="wa-title">
+        {{ if $isEs }}¿Necesitas un tip local? 🌴{{ else }}Need a local tip? 🌴{{ end }}
+      </p>
+      <p class="wa-sub">
+        {{ if $isEs }}Te respondemos por WhatsApp en pocas horas.{{ else }}We reply on WhatsApp within a few hours.{{ end }}
+      </p>
+
+      <p class="wa-label">
+        {{ if $isEs }}¿QUÉ ESTÁS BUSCANDO?{{ else }}WHAT ARE YOU LOOKING FOR?{{ end }}
+      </p>
+      <div class="wa-topics">
+        <button onclick="waSelTopic(this,'{{ if $isEs }}lugar de trabajo{{ else }}work spot{{ end }}')" class="wa-topic">
+          📶 {{ if $isEs }}Lugar de trabajo{{ else }}Work spot{{ end }}
+        </button>
+        <button onclick="waSelTopic(this,'{{ if $isEs }}evento{{ else }}event{{ end }}')" class="wa-topic">
+          📅 {{ if $isEs }}Evento{{ else }}Event{{ end }}
+        </button>
+        <button onclick="waSelTopic(this,'{{ if $isEs }}día de playa{{ else }}beach day{{ end }}')" class="wa-topic">
+          🏖️ {{ if $isEs }}Día de playa{{ else }}Beach day{{ end }}
+        </button>
+        <button onclick="waSelTopic(this,'{{ if $isEs }}otra cosa{{ else }}something else{{ end }}')" class="wa-topic">
+          💬 {{ if $isEs }}Otra cosa{{ else }}Something else{{ end }}
+        </button>
+      </div>
+
+      <div id="wa-ask-extra" style="display:none;margin-bottom:1rem">
+        <input type="date" id="wa-date"
+          style="width:100%;box-sizing:border-box;margin-bottom:8px;
+                 font-family:inherit;font-size:0.875rem;
+                 border:1px solid var(--color-border);
+                 border-radius:4px;padding:8px;
+                 background:var(--color-bg);color:var(--color-text)">
+        <input type="text" id="wa-note"
+          placeholder="{{ if $isEs }}Tamaño del grupo, vecindario, presupuesto...{{ else }}Group size, neighborhood, budget, vibe...{{ end }}"
+          style="width:100%;box-sizing:border-box;
+                 font-family:inherit;font-size:0.875rem;
+                 border:1px solid var(--color-border);
+                 border-radius:4px;padding:8px;
+                 background:var(--color-bg);color:var(--color-text)">
+      </div>
+
+      <button onclick="waSendAsk('{{ $wa }}')" class="wa-send">
+        {{ if $isEs }}Enviar por WhatsApp →{{ else }}Send on WhatsApp →{{ end }}
+      </button>
+    </div>
+
+    <div id="wa-panel-suggest" style="display:none">
+      <p class="wa-title">
+        {{ if $isEs }}¿Conoces un buen lugar? 👀{{ else }}Know a good spot? 👀{{ end }}
+      </p>
+      <p class="wa-sub">
+        {{ if $isEs }}Lo verifico en persona antes de publicarlo.{{ else }}I verify every spot in person before listing.{{ end }}
+      </p>
+
+      <input type="text" id="wa-sug-name"
+        placeholder="{{ if $isEs }}Nombre del lugar{{ else }}Place name{{ end }}"
+        style="width:100%;box-sizing:border-box;margin-bottom:8px;
+               font-family:inherit;font-size:0.875rem;
+               border:1px solid var(--color-border);
+               border-radius:4px;padding:8px;
+               background:var(--color-bg);color:var(--color-text)">
+
+      <input type="text" id="wa-sug-hood"
+        placeholder="{{ if $isEs }}Vecindario (ej. Getsemaní){{ else }}Neighborhood (e.g. Getsemaní){{ end }}"
+        style="width:100%;box-sizing:border-box;margin-bottom:1rem;
+               font-family:inherit;font-size:0.875rem;
+               border:1px solid var(--color-border);
+               border-radius:4px;padding:8px;
+               background:var(--color-bg);color:var(--color-text)">
+
+      <p class="wa-label">{{ if $isEs }}TIPO{{ else }}TYPE{{ end }}</p>
+      <div class="wa-types">
+        <button onclick="waSelType(this,'{{ if $isEs }}café{{ else }}café{{ end }}')" class="wa-type">
+          {{ if $isEs }}Café{{ else }}Café{{ end }}
+        </button>
+        <button onclick="waSelType(this,'coworking')" class="wa-type">
+          Coworking
+        </button>
+        <button onclick="waSelType(this,'{{ if $isEs }}playa{{ else }}beach{{ end }}')" class="wa-type">
+          {{ if $isEs }}Playa{{ else }}Beach{{ end }}
+        </button>
+        <button onclick="waSelType(this,'{{ if $isEs }}evento{{ else }}event{{ end }}')" class="wa-type">
+          {{ if $isEs }}Evento{{ else }}Event{{ end }}
+        </button>
+      </div>
+
+      <input type="text" id="wa-sug-note"
+        placeholder="{{ if $isEs }}¿Por qué te gusta? (opcional){{ else }}Why do you like it? (optional){{ end }}"
+        style="width:100%;box-sizing:border-box;margin-bottom:1.25rem;
+               font-family:inherit;font-size:0.875rem;
+               border:1px solid var(--color-border);
+               border-radius:4px;padding:8px;
+               background:var(--color-bg);color:var(--color-text)">
+
+      <button onclick="waSendSuggest('{{ $wa }}')" class="wa-send">
+        {{ if $isEs }}Enviar sugerencia →{{ else }}Send suggestion →{{ end }}
+      </button>
+
+      <p style="font-size:0.7rem;color:var(--color-muted);margin:8px 0 0;text-align:center;">
+        {{ if $isEs }}Verifico cada lugar en persona antes de publicarlo.{{ else }}I verify every spot in person before listing.{{ end }}
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+var waTopic = '', waType = '';
+
+function waTab(panel, btn) {
+  document.getElementById('wa-panel-ask').style.display = panel === 'ask' ? 'block' : 'none';
+  document.getElementById('wa-panel-suggest').style.display = panel === 'suggest' ? 'block' : 'none';
+  document.querySelectorAll('.wa-tab').forEach(function(b) { b.classList.remove('wa-tab-active'); });
+  btn.classList.add('wa-tab-active');
+}
+
+function waSelTopic(el, t) {
+  document.querySelectorAll('.wa-topic').forEach(function(b) { b.classList.remove('wa-active'); });
+  el.classList.add('wa-active');
+  waTopic = t;
+  document.getElementById('wa-ask-extra').style.display = 'block';
+}
+
+function waSelType(el, t) {
+  document.querySelectorAll('.wa-type').forEach(function(b) { b.classList.remove('wa-active'); });
+  el.classList.add('wa-active');
+  waType = t;
+}
+
+function waSendAsk(number) {
+  var date = document.getElementById('wa-date').value;
+  var note = document.getElementById('wa-note').value.trim();
+  var msg = 'Hi! I found Cartagena Up and need help';
+  if (waTopic) msg += ' with a ' + waTopic;
+  if (date) msg += '. Visiting on ' + date;
+  if (note) msg += '. ' + note;
+  msg += '.';
+  window.open('https://wa.me/' + number + '?text=' + encodeURIComponent(msg), '_blank');
+}
+
+function waSendSuggest(number) {
+  var name = document.getElementById('wa-sug-name').value.trim();
+  var hood = document.getElementById('wa-sug-hood').value.trim();
+  var note = document.getElementById('wa-sug-note').value.trim();
+  if (!name) { alert('Please add the place name'); return; }
+  var msg = 'Hi! I want to suggest a place for Cartagena Up: ' + name;
+  if (hood) msg += ' in ' + hood;
+  if (waType) msg += ' (' + waType + ')';
+  if (note) msg += '. ' + note;
+  msg += '. Please verify and add it!';
+  window.open('https://wa.me/' + number + '?text=' + encodeURIComponent(msg), '_blank');
+}
+</script>
