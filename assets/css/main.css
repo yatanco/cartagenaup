@@ -449,6 +449,84 @@ strong, b {
   margin-top: 0.3rem;
 }
 
+/* ---- Homepage content previews ---- */
+
+.last-updated-signals p {
+  margin: 0;
+}
+
+.last-updated-signals p + p {
+  margin-top: 0.15rem;
+}
+
+.preview-list {
+  list-style: none;
+  margin: 0.6rem 0 0.5rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.preview-item {
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.preview-item a {
+  color: var(--color-text);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.preview-item a:hover {
+  color: var(--color-accent);
+}
+
+.preview-meta {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+.verified-badge-sm {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--color-badge-bg);
+  color: var(--color-badge-text);
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+.event-item {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 0 0.5rem;
+  align-items: baseline;
+}
+
+.event-date {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+.event-venue {
+  grid-column: 2;
+  font-size: 0.78rem;
+  color: var(--color-muted);
+}
+
+.see-all-link {
+  font-size: 0.8rem;
+  display: inline-block;
+  margin-top: 0.3rem;
+}
+
 /* ---- WhatsApp CTA ---- */
 
 .whatsapp-cta {
