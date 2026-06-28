@@ -12,6 +12,9 @@
   --color-card-border: #e4e4e0;
   --color-border: #e4e4e0;
   --color-surface: #fff;
+  --color-cta-bg: #f0fdf4;
+  --color-cta-border: #bbf7d0;
+  --color-event-confirmed: #166534;
   --radius-card: 8px;
   --shadow-card: 0 1px 3px rgba(0,0,0,0.07), 0 0 0 1px var(--color-card-border);
 }
@@ -433,14 +436,14 @@ strong, b {
 }
 
 .teaser h2 {
-  margin: 0 0 0.15rem;
+  margin: 0 0 0.5rem;
   font-size: 1rem;
 }
 
 .teaser p {
   font-size: 0.875rem;
   color: var(--color-muted);
-  margin: 0;
+  margin: 0 0 1.5rem;
 }
 
 .teaser a {
@@ -449,97 +452,118 @@ strong, b {
   margin-top: 0.3rem;
 }
 
-/* ---- Homepage content previews ---- */
+/* ---- Homepage metadata line ---- */
 
-.last-updated-signals p {
-  margin: 0;
-}
-
-.last-updated-signals p + p {
-  margin-top: 0.15rem;
-}
-
-.preview-list {
-  list-style: none;
-  margin: 0.6rem 0 0.5rem;
-  padding: 0;
+.homepage-meta {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  margin-bottom: 2rem;
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  gap: 1.5rem;
+  flex-wrap: wrap;
 }
 
-.preview-item {
-  font-size: 0.9rem;
-  line-height: 1.4;
-}
+/* ---- Homepage work spot preview items ---- */
 
-.preview-item a {
-  color: var(--color-text);
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.preview-item a:hover {
-  color: var(--color-accent);
-}
-
-.preview-meta {
-  display: block;
-  font-size: 0.8rem;
-  color: var(--color-muted);
-}
-
-.verified-badge-sm {
-  display: inline-block;
-  font-size: 0.62rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background: var(--color-badge-bg);
-  color: var(--color-badge-text);
-  padding: 0.1em 0.4em;
-  border-radius: 3px;
-  vertical-align: middle;
-}
-
-.event-item {
-  display: grid;
-  grid-template-columns: 6.5rem 1fr;
-  gap: 0 0.5rem;
+.hp-place-item {
+  display: flex;
   align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.875rem;
 }
 
-.event-date {
-  font-size: 0.8rem;
-  color: var(--color-muted);
+.hp-place-name {
+  color: var(--color-accent);
+  font-weight: 600;
+  text-decoration: none;
   white-space: nowrap;
 }
 
-.event-venue {
-  grid-column: 2;
-  font-size: 0.78rem;
+.hp-place-name:hover { text-decoration: underline; }
+
+.hp-place-meta {
   color: var(--color-muted);
+  font-size: 0.8rem;
 }
 
-.see-all-link {
+.hp-badge {
+  font-size: 0.6rem;
+  padding: 0.15em 0.5em;
+  vertical-align: middle;
+}
+
+/* ---- Homepage event preview items ---- */
+
+.hp-event-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.875rem;
+}
+
+.hp-event-date {
+  color: var(--color-muted);
   font-size: 0.8rem;
+  white-space: nowrap;
+  min-width: 70px;
+}
+
+.hp-event-title {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 500;
+  flex: 1;
+  min-width: 0;
+}
+
+.hp-event-title:hover { text-decoration: underline; }
+
+.hp-event-venue {
+  color: var(--color-muted);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+/* ---- Homepage "see all" links ---- */
+
+.hp-see-all {
   display: inline-block;
-  margin-top: 0.3rem;
+  font-size: 0.8rem;
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 600;
+  margin-top: 0.5rem;
 }
 
 /* ---- WhatsApp CTA ---- */
 
 .whatsapp-cta {
-  border-left: 3px solid #48bb78;
-  padding: 0.6rem 0 0.6rem 1rem;
-  margin-top: 2.5rem;
+  background: var(--color-cta-bg);
+  border: 1px solid var(--color-cta-border);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  margin: 2rem 0;
   font-size: 0.9rem;
+  color: var(--color-text);
 }
 
-.whatsapp-cta a {
-  font-weight: 600;
-  color: #1a7a2e;
+.whatsapp-cta p {
+  margin: 0;
 }
+
+.whatsapp-link {
+  color: var(--color-event-confirmed);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.whatsapp-link:hover { text-decoration: underline; }
 
 .whatsapp-trigger {
   color: #1a7a2e;
@@ -898,7 +922,7 @@ strong, b {
 
 .page-home h1                                      { animation: fadeUp 0.45s ease both; }
 .page-home .subhead                                { animation: fadeUp 0.45s 0.08s ease both; }
-.page-home .last-updated                           { animation: fadeUp 0.45s 0.14s ease both; }
+.page-home .homepage-meta                          { animation: fadeUp 0.45s 0.14s ease both; }
 .page-home .section-teasers .teaser:nth-child(1)   { animation: fadeUp 0.45s 0.22s ease both; }
 .page-home .section-teasers .teaser:nth-child(2)   { animation: fadeUp 0.45s 0.30s ease both; }
 .page-home .section-teasers .teaser:nth-child(3)   { animation: fadeUp 0.45s 0.38s ease both; }

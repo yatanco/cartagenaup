@@ -35,11 +35,11 @@
   <p class="subhead">WiFi-tested work spots, current events, and honest beach logistics — by someone who lives here.</p>
 {{ end }}
 
-<div class="last-updated last-updated-signals">
+<div class="homepage-meta">
   {{ if $latestTested }}
-  <p>{{ if eq $lang "es" }}Lugares de trabajo: última verificación{{ else }}Work spots: last verified{{ end }} {{ (time (printf "%s-01" $latestTested)).Format "Jan 2006" }}</p>
+  <span>{{ if eq $lang "es" }}Lugares de trabajo: última verificación{{ else }}Work spots: last verified{{ end }} {{ (time (printf "%s-01" $latestTested)).Format "Jan 2006" }}</span>
   {{ end }}
-  <p>{{ if eq $lang "es" }}Eventos: actualizado{{ else }}Events: updated{{ end }} {{ now.Format "2 Jan 2006" }}</p>
+  <span>{{ if eq $lang "es" }}Eventos: actualizado{{ else }}Events: updated{{ end }} {{ now.Format "2 Jan 2006" }}</span>
 </div>
 
 <div class="section-teasers">
@@ -53,18 +53,17 @@
     {{ end }}
 
     {{ if $previewWork }}
-    <ul class="preview-list">
-      {{ range $previewWork }}
-      {{ $workBase := cond (eq $lang "es") "/es/work/" "/work/" }}
-      <li class="preview-item">
-        <a href="{{ $workBase }}{{ .slug }}/">{{ .name }}</a>
-        <span class="preview-meta">{{ .neighborhood }} · WiFi {{ .wifi_down_mbps }}/{{ .wifi_up_mbps }} Mbps · <span class="verified-badge-sm">{{ if eq $lang "es" }}VERIFICADO{{ else }}VERIFIED{{ end }} {{ .last_tested }}</span></span>
-      </li>
-      {{ end }}
-    </ul>
-    <a class="see-all-link" href="{{ if eq $lang "es" }}/es/work/{{ else }}/work/{{ end }}">{{ if eq $lang "es" }}Ver todos los {{ $workCount }} lugares →{{ else }}See all {{ $workCount }} spots →{{ end }}</a>
+    {{ range $previewWork }}
+    {{ $workBase := cond (eq $lang "es") "/es/work/" "/work/" }}
+    <div class="hp-place-item">
+      <a href="{{ $workBase }}{{ .slug }}/" class="hp-place-name">{{ .name }}</a>
+      <span class="hp-place-meta">{{ .neighborhood }} · WiFi {{ .wifi_down_mbps }}/{{ .wifi_up_mbps }} Mbps</span>
+      <span class="badge hp-badge">{{ if eq $lang "es" }}VERIFICADO{{ else }}VERIFIED{{ end }} {{ .last_tested }}</span>
+    </div>
+    {{ end }}
+    <a class="hp-see-all" href="{{ if eq $lang "es" }}/es/work/{{ else }}/work/{{ end }}">{{ if eq $lang "es" }}Ver todos los {{ $workCount }} lugares →{{ else }}See all {{ $workCount }} spots →{{ end }}</a>
     {{ else }}
-    <a href="{{ if eq $lang "es" }}/es/work/{{ else }}/work/{{ end }}">{{ if eq $lang "es" }}Ver todos los lugares →{{ else }}See all spots →{{ end }}</a>
+    <a class="hp-see-all" href="{{ if eq $lang "es" }}/es/work/{{ else }}/work/{{ end }}">{{ if eq $lang "es" }}Ver todos los lugares →{{ else }}See all spots →{{ end }}</a>
     {{ end }}
   </div>
 
@@ -78,21 +77,19 @@
     {{ end }}
 
     {{ if $previewEvents }}
-    <ul class="preview-list events-preview">
-      {{ range $previewEvents }}
-      <li class="preview-item event-item">
-        <span class="event-date">{{ (time .date).Format "Mon 2 Jan" }}</span>
-        <a href="{{ if eq $lang "es" }}/es/events/{{ else }}/events/{{ end }}">{{ .title }}</a>
-        <span class="event-venue">{{ .venue }}</span>
-      </li>
-      {{ end }}
-    </ul>
-    <a class="see-all-link" href="{{ if eq $lang "es" }}/es/events/{{ else }}/events/{{ end }}">{{ if eq $lang "es" }}Ver todos los eventos →{{ else }}See all events →{{ end }}</a>
+    {{ range $previewEvents }}
+    <div class="hp-event-item">
+      <span class="hp-event-date">{{ (time .date).Format "Mon 2 Jan" }}</span>
+      <a href="{{ if eq $lang "es" }}/es/events/{{ else }}/events/{{ end }}" class="hp-event-title">{{ .title }}</a>
+      <span class="hp-event-venue">{{ .venue }}</span>
+    </div>
+    {{ end }}
+    <a class="hp-see-all" href="{{ if eq $lang "es" }}/es/events/{{ else }}/events/{{ end }}">{{ if eq $lang "es" }}Ver todos los eventos →{{ else }}See all events →{{ end }}</a>
     {{ else }}
-    <a href="{{ if eq $lang "es" }}/es/events/{{ else }}/events/{{ end }}">{{ if eq $lang "es" }}Ver qué hay →{{ else }}See what's on →{{ end }}</a>
+    <a class="hp-see-all" href="{{ if eq $lang "es" }}/es/events/{{ else }}/events/{{ end }}">{{ if eq $lang "es" }}Ver qué hay →{{ else }}See what's on →{{ end }}</a>
     {{ end }}
   </div>
 </div>
 
-{{ partial "whatsapp-trigger.html" . }}
+{{ partial "whatsapp-cta.html" . }}
 {{ end }}
