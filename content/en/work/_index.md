@@ -1,6 +1,6 @@
 ---
 title: "Work in Cartagena"
-description: "WiFi-tested cafés and coworking spaces, verified by a local."
+description: "WiFi speed-tested cafés and coworking spaces in Cartagena, Colombia — verified in person by a local resident. Updated 2026."
 ---
 
 I've been living in Cartagena since 2021 and work remotely 

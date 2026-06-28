@@ -32,6 +32,7 @@
     <span class="filter-pill" onclick="setFilter('cultural',this)">{{ if eq $lang "es" }}Cultura{{ else }}Culture{{ end }}</span>
     <span class="filter-pill" onclick="setFilter('music',this)">{{ if eq $lang "es" }}Música{{ else }}Music{{ end }}</span>
     <span class="filter-pill" onclick="setFilter('gratis',this)">{{ if eq $lang "es" }}Gratis{{ else }}Free{{ end }}</span>
+    <span class="filter-pill" onclick="setFilter('lgbtq',this)">{{ if eq $lang "es" }}Orgullo{{ else }}Pride{{ end }}</span>
   </div>
 </div>
 <div id="event-count" class="event-count"></div>
@@ -46,6 +47,27 @@
   {{ else if eq .type "market" }}{{ $thumbColor = "#4D7C0F" }}
   {{ else if eq .type "sports" }}{{ $thumbColor = "#075985" }}
   {{ else if eq .type "exposicion" }}{{ $thumbColor = "#075985" }}
+  {{ end }}
+
+  {{ $typeLabel := .type }}
+  {{ if eq $lang "es" }}
+    {{ if eq .type "music" }}{{ $typeLabel = "Música" }}
+    {{ else if eq .type "cultural" }}{{ $typeLabel = "Cultura" }}
+    {{ else if eq .type "taller" }}{{ $typeLabel = "Taller" }}
+    {{ else if eq .type "festival" }}{{ $typeLabel = "Festival" }}
+    {{ else if eq .type "sports" }}{{ $typeLabel = "Deporte" }}
+    {{ else if eq .type "exposicion" }}{{ $typeLabel = "Exposición" }}
+    {{ else if eq .type "lgbtq" }}{{ $typeLabel = "Orgullo" }}
+    {{ end }}
+  {{ else }}
+    {{ if eq .type "music" }}{{ $typeLabel = "Music" }}
+    {{ else if eq .type "cultural" }}{{ $typeLabel = "Culture" }}
+    {{ else if eq .type "taller" }}{{ $typeLabel = "Workshop" }}
+    {{ else if eq .type "festival" }}{{ $typeLabel = "Festival" }}
+    {{ else if eq .type "sports" }}{{ $typeLabel = "Sports" }}
+    {{ else if eq .type "exposicion" }}{{ $typeLabel = "Exhibition" }}
+    {{ else if eq .type "lgbtq" }}{{ $typeLabel = "Pride" }}
+    {{ end }}
   {{ end }}
 
   {{ $words := split .title " " }}
@@ -78,7 +100,7 @@
         <div class="event-title">{{ .title }}</div>
         <div class="event-venue">{{ .venue }}{{ if .neighborhood }} · {{ .neighborhood }}{{ end }}</div>
         <div class="tags">
-          <span class="tag tag-{{ .type }}">{{ .type }}</span>
+          <span class="tag tag-{{ .type }}">{{ $typeLabel }}</span>
           <span class="tag tag-{{ $priceTag }}">{{ if eq $priceTag "gratis" }}{{ if eq $lang "es" }}gratis{{ else }}Free{{ end }}{{ else }}{{ if eq $lang "es" }}pago{{ else }}Paid{{ end }}{{ end }}</span>
           {{ if .confirmed }}<span class="tag" style="background:var(--color-pill-bg);color:var(--color-muted);">✓ {{ if eq $lang "es" }}confirmado{{ else }}confirmed{{ end }}</span>{{ end }}
         </div>
@@ -105,6 +127,43 @@
 {{ end }}
 
 {{ partial "whatsapp-cta.html" . }}
+
+{{ if $sorted }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": [
+    {{ range $i, $e := $sorted }}{{ if $i }},{{ end }}
+    {
+      "@type": "Event",
+      "name": {{ $e.title | jsonify }},
+      "startDate": "{{ $e.date }}T{{ $e.t0 }}:00",
+      "location": {
+        "@type": "Place",
+        "name": {{ $e.venue | jsonify }},
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Cartagena",
+          "addressCountry": "CO"
+        }
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "{{ if or (eq $e.price "gratis") (eq $e.price "Free — open access") }}0{{ else }}0{{ end }}",
+        "priceCurrency": "COP",
+        "availability": "https://schema.org/InStock"
+      },
+      "organizer": {
+        "@type": "Organization",
+        "name": {{ $e.venue | jsonify }}
+      }
+    }
+    {{ end }}
+  ]
+}
+</script>
+{{ end }}
 
 <script>
 let activeFilter = 'all';

@@ -18,7 +18,7 @@
     <img
       src="/images/places/work/{{ $img.file }}"
       alt="{{ $img.caption }}"
-      loading="lazy"
+      {{ if .isFirst }}fetchpriority="high"{{ else }}loading="lazy"{{ end }}
       width="1200"
       height="675"
       style="width:100%; border-radius:6px 6px 0 0;
@@ -48,6 +48,12 @@
 
   {{ with $note }}
   <p style="font-size:0.9rem; line-height:1.6; margin:0 0 0.75rem;">{{ . }}</p>
+  {{ end }}
+
+  {{ if .hotspot_warning }}
+  <p style="font-size:0.8rem; color:var(--color-warning); background:var(--color-warning-bg); padding:0.4em 0.65em; border-radius:4px; margin:0 0 0.75rem;">
+    ⚠️ {{ if eq $lang "es" }}Ten un hotspot de respaldo para llamadas o subidas pesadas.{{ else }}Bring a hotspot backup for calls or heavy uploads.{{ end }}
+  </p>
   {{ end }}
 
   {{ with .hours }}

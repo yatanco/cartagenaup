@@ -1,6 +1,6 @@
 ---
 title: "Trabajar en Cartagena"
-description: "Cafés con WiFi probado y espacios de coworking, verificados por un local."
+description: "Cafés con WiFi probado y espacios de coworking en Cartagena, Colombia — verificados en persona por un residente local. Actualizado 2026."
 ---
 
 Vivo en Cartagena desde 2021 y trabajo de forma remota 

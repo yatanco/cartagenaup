@@ -11,8 +11,8 @@
 
 {{ $sorted := sort $spots "last_tested" "desc" }}
 
-{{ range $sorted }}
-  {{ partial "place-card.html" . }}
+{{ range $i, $place := $sorted }}
+  {{ partial "place-card.html" (merge $place (dict "isFirst" (eq $i 0))) }}
 {{ end }}
 
 {{ partial "whatsapp-cta.html" . }}
