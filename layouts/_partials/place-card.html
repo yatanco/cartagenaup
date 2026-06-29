@@ -50,7 +50,7 @@
     {{ .neighborhood }}{{ with .address }} · {{ . }}{{ end }}
   </p>
 
-  <span class="badge">{{ if eq $lang "es" }}VERIFICADO{{ else }}VERIFIED{{ end }}: {{ (time (printf "%s-01" .last_tested)).Format "Jan 2006" }}</span>
+  <span class="badge">{{ if eq $lang "es" }}VERIFICADO{{ else }}VERIFIED{{ end }}: {{ (time .last_tested).Format "2 Jan 2006" }}</span>
 
   <p style="font-size:0.85rem; margin:0.75rem 0;">
     WiFi {{ .wifi_down_mbps }}/{{ .wifi_up_mbps }} Mbps{{ if .ac }} · AC{{ end }} · {{ if eq $lang "es" }}Enchufes{{ else }}Outlets{{ end }}: {{ .outlets }}
