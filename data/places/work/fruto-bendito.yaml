@@ -2,7 +2,7 @@ name: "Fruto Bendito"
 slug: fruto-bendito
 neighborhood: "Centro Histórico"
 type: "cafe"
-last_tested: "2026-06"
+last_tested: "2026-06-28"
 tested_by: "Yatan"
 wifi_network: "Espacio Cultural"
 wifi_down_mbps: 5

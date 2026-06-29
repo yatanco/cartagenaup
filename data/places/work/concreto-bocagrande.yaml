@@ -2,7 +2,7 @@ name: "Concreto Work and Coffee"
 slug: concreto-bocagrande
 neighborhood: "Bocagrande"
 type: "cafe"
-last_tested: "2026-06"
+last_tested: "2026-06-28"
 tested_by: "Yatan"
 wifi_network: "Bis Contact Center"
 wifi_down_mbps: 85

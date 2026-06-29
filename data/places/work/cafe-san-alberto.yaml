@@ -2,7 +2,7 @@ name: "Café San Alberto"
 slug: cafe-san-alberto
 neighborhood: "Centro Histórico"
 type: "cafe"
-last_tested: "2026-06"
+last_tested: "2026-06-28"
 tested_by: "Yatan"
 wifi_network: ""
 wifi_down_mbps: 3

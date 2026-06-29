@@ -2,7 +2,7 @@ name: "Claustro de la Merced"
 slug: claustro-la-merced
 neighborhood: "Centro Histórico"
 type: "cultural-space"
-last_tested: "2026-06"
+last_tested: "2026-06-28"
 tested_by: "Yatan"
 wifi_network: "Claustro La Merced"
 wifi_down_mbps: 20
