@@ -58,7 +58,7 @@
     <div class="hp-place-item">
       <a href="{{ $workBase }}{{ .slug }}/" class="hp-place-name">{{ .name }}</a>
       <span class="hp-place-meta">{{ .neighborhood }} · WiFi {{ .wifi_down_mbps }}/{{ .wifi_up_mbps }} Mbps</span>
-      <span class="badge hp-badge">{{ if eq $lang "es" }}VERIFICADO{{ else }}VERIFIED{{ end }} {{ .last_tested }}</span>
+      <span class="badge hp-badge">{{ if eq $lang "es" }}VERIFICADO{{ else }}VERIFIED{{ end }} {{ (time (printf "%s-01" .last_tested)).Format "Jan 2006" }}</span>
     </div>
     {{ end }}
     <a class="hp-see-all" href="{{ if eq $lang "es" }}/es/work/{{ else }}/work/{{ end }}">{{ if eq $lang "es" }}Ver todos los {{ $workCount }} lugares →{{ else }}See all {{ $workCount }} spots →{{ end }}</a>
