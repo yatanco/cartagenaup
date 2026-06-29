@@ -14,11 +14,38 @@
 {{ else }}
 <article class="place-detail">
 
-  {{ with index $d.images 0 }}
-  <figure class="card-photo detail-photo">
-    <img src="/images/places/work/{{ .file }}" alt="{{ .caption }}" loading="lazy" width="800" height="500">
-    {{ with .caption }}<figcaption>{{ . }}</figcaption>{{ end }}
-  </figure>
+  {{ if $d.images }}
+  {{ $imgs := $d.images }}
+  {{ $count := len $imgs }}
+  {{ $slug := $d.slug }}
+  <div class="place-carousel" id="carousel-{{ $slug }}">
+    {{ range $i, $img := $imgs }}
+    <div class="carousel-slide{{ if eq $i 0 }} active{{ end }}" data-index="{{ $i }}">
+      <picture>
+        <source srcset="/images/places/work/{{ $img.file | replaceRE "\\.jpg$" ".webp" }}" type="image/webp">
+        <img src="/images/places/work/{{ $img.file }}"
+          alt="{{ $img.caption }}"
+          {{ if eq $i 0 }}fetchpriority="high"{{ else }}loading="lazy"{{ end }}
+          width="1200" height="675"
+          style="width:100%;display:block;border-radius:6px 6px 0 0;max-height:360px;object-fit:cover;">
+      </picture>
+      {{ if $img.caption }}
+      <p class="carousel-caption">{{ $img.caption }}</p>
+      {{ end }}
+    </div>
+    {{ end }}
+    {{ if gt $count 1 }}
+    <button class="carousel-btn carousel-prev" onclick="carouselMove('{{ $slug }}', -1)" aria-label="{{ if eq $lang "es" }}Foto anterior{{ else }}Previous photo{{ end }}">‹</button>
+    <button class="carousel-btn carousel-next" onclick="carouselMove('{{ $slug }}', 1)" aria-label="{{ if eq $lang "es" }}Foto siguiente{{ else }}Next photo{{ end }}">›</button>
+    <div class="carousel-dots">
+      {{ range $i, $img := $imgs }}
+      <span class="carousel-dot{{ if eq $i 0 }} active{{ end }}"
+        data-carousel="{{ $slug }}" data-index="{{ $i }}"
+        onclick="carouselGo('{{ $slug }}', {{ $i }})"></span>
+      {{ end }}
+    </div>
+    {{ end }}
+  </div>
   {{ end }}
 
   <h1>{{ $d.name }}</h1>
@@ -61,14 +88,6 @@
     </a>
   </div>
 
-  {{ range $i, $img := $d.images }}
-    {{ if gt $i 0 }}
-    <figure class="card-photo detail-extra-photo">
-      <img src="/images/places/work/{{ $img.file }}" alt="{{ $img.caption }}" loading="lazy" width="800" height="500">
-      {{ with $img.caption }}<figcaption>{{ . }}</figcaption>{{ end }}
-    </figure>
-    {{ end }}
-  {{ end }}
 
 </article>
 

@@ -69,5 +69,26 @@
   "inLanguage": ["en", "es"]
 }
 </script>
+<script>
+function carouselMove(slug, dir) {
+  var slides = document.querySelectorAll('#carousel-' + slug + ' .carousel-slide');
+  var dots = document.querySelectorAll('.carousel-dot[data-carousel="' + slug + '"]');
+  var current = 0;
+  slides.forEach(function(s, i) { if (s.classList.contains('active')) current = i; });
+  slides[current].classList.remove('active');
+  dots[current].classList.remove('active');
+  var next = (current + dir + slides.length) % slides.length;
+  slides[next].classList.add('active');
+  dots[next].classList.add('active');
+}
+function carouselGo(slug, index) {
+  var slides = document.querySelectorAll('#carousel-' + slug + ' .carousel-slide');
+  var dots = document.querySelectorAll('.carousel-dot[data-carousel="' + slug + '"]');
+  slides.forEach(function(s) { s.classList.remove('active'); });
+  dots.forEach(function(d) { d.classList.remove('active'); });
+  slides[index].classList.add('active');
+  dots[index].classList.add('active');
+}
+</script>
 </body>
 </html>

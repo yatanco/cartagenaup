@@ -10,27 +10,37 @@
 <article class="place-card">
 
 {{ if .images }}
-  {{ $img := index .images 0 }}
-  <picture>
-    <source
-      srcset="/images/places/work/{{ $img.file | replaceRE "\\.jpg$" ".webp" }}"
-      type="image/webp">
-    <img
-      src="/images/places/work/{{ $img.file }}"
-      alt="{{ $img.caption }}"
-      {{ if .isFirst }}fetchpriority="high"{{ else }}loading="lazy"{{ end }}
-      width="1200"
-      height="675"
-      style="width:100%; border-radius:6px 6px 0 0;
-             display:block; margin-bottom:1rem;
-             max-height:220px; object-fit:cover;">
-  </picture>
-  {{ if $img.caption }}
-    <p style="font-size:0.75rem; color:var(--color-muted);
-              margin-top:-0.75rem; margin-bottom:1rem;">
-      {{ $img.caption }}
-    </p>
+{{ $imgs := .images }}
+{{ $count := len $imgs }}
+{{ $slug := .slug }}
+<div class="place-carousel" id="carousel-{{ $slug }}">
+  {{ range $i, $img := $imgs }}
+  <div class="carousel-slide{{ if eq $i 0 }} active{{ end }}" data-index="{{ $i }}">
+    <picture>
+      <source srcset="/images/places/work/{{ $img.file | replaceRE "\\.jpg$" ".webp" }}" type="image/webp">
+      <img src="/images/places/work/{{ $img.file }}"
+        alt="{{ $img.caption }}"
+        {{ if and (eq $i 0) $.isFirst }}fetchpriority="high"{{ else }}loading="lazy"{{ end }}
+        width="1200" height="675"
+        style="width:100%;display:block;border-radius:6px 6px 0 0;max-height:220px;object-fit:cover;">
+    </picture>
+    {{ if $img.caption }}
+    <p class="carousel-caption">{{ $img.caption }}</p>
+    {{ end }}
+  </div>
   {{ end }}
+  {{ if gt $count 1 }}
+  <button class="carousel-btn carousel-prev" onclick="carouselMove('{{ $slug }}', -1)" aria-label="{{ if eq $lang "es" }}Foto anterior{{ else }}Previous photo{{ end }}">‹</button>
+  <button class="carousel-btn carousel-next" onclick="carouselMove('{{ $slug }}', 1)" aria-label="{{ if eq $lang "es" }}Foto siguiente{{ else }}Next photo{{ end }}">›</button>
+  <div class="carousel-dots">
+    {{ range $i, $img := $imgs }}
+    <span class="carousel-dot{{ if eq $i 0 }} active{{ end }}"
+      data-carousel="{{ $slug }}" data-index="{{ $i }}"
+      onclick="carouselGo('{{ $slug }}', {{ $i }})"></span>
+    {{ end }}
+  </div>
+  {{ end }}
+</div>
 {{ end }}
 
   <h2 style="margin:0 0 0.15rem; font-size:1.1rem;">
@@ -40,7 +50,7 @@
     {{ .neighborhood }}{{ with .address }} · {{ . }}{{ end }}
   </p>
 
-  <span class="badge">{{ if eq $lang "es" }}VERIFICADO{{ else }}VERIFIED{{ end }}: {{ .last_tested }}</span>
+  <span class="badge">{{ if eq $lang "es" }}VERIFICADO{{ else }}VERIFIED{{ end }}: {{ (time (printf "%s-01" .last_tested)).Format "Jan 2006" }}</span>
 
   <p style="font-size:0.85rem; margin:0.75rem 0;">
     WiFi {{ .wifi_down_mbps }}/{{ .wifi_up_mbps }} Mbps{{ if .ac }} · AC{{ end }} · {{ if eq $lang "es" }}Enchufes{{ else }}Outlets{{ end }}: {{ .outlets }}
